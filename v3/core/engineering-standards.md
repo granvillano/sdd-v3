@@ -1,7 +1,7 @@
 # core/engineering-standards.md — SDD v3 Engineering Standards
 
 > **SSOT Domain:** Code Quality | **Inherits:** none  
-> **Version:** 3.2.0
+> **Version:** 3.3.5
 
 ---
 
@@ -580,10 +580,55 @@ Metrics MUST be exported in a standard format compatible with the project's moni
 
 ---
 
+## 13. Developer Tooling Baseline (v3.3.5)
+
+> **Full specification:** `core/tooling-baseline.md`  
+> This section is a normative summary. Profiles provide stack-specific configuration.
+
+### 13.1 Rule
+
+Every project MUST configure automated tooling to enforce the rules in this document. **Manual enforcement alone is insufficient.** Tooling must run at two layers:
+
+| Layer | When | Bypass allowed? |
+|-------|------|-----------------|
+| Pre-commit (Husky + lint-staged) | Every local commit | No (use `--no-verify` only with written justification in commit body) |
+| CI pipeline | Every push/PR | **Never** |
+
+### 13.2 Mandatory tooling (all profiles)
+
+| Tool | Purpose | Failure blocks |
+|------|---------|----------------|
+| **Linter** (ESLint or equivalent) | Enforce code standards | Commit + CI |
+| **Formatter** (Prettier or equivalent) | Enforce consistent style | Commit + CI |
+| **commitlint** | Enforce Conventional Commits | Commit |
+| **Husky** | Manage git hooks | N/A (infrastructure) |
+| **lint-staged** | Run tools only on staged files | N/A (performance) |
+
+### 13.3 Zero-tolerance lint rules (all projects)
+
+These rules MUST be set to **error** (never warning) in every linter configuration:
+
+| Rule | Enforcement |
+|------|------------|
+| `no-console` | No `console.log/warn/error` in `src/` — use structured logger |
+| `no-unused-vars` | Dead code is not deployed |
+| `no-explicit-any` (TypeScript) | `any` defeats the type system |
+| `eqeqeq` | Always use `===` |
+
+### 13.4 QG enforcement
+
+- **QG-3 BUILD GATE:** Lint (0 errors), format check, type check must all pass. CI fails if any tool exits non-zero.
+- **QG-5 RELEASE GATE:** Commit history must be Conventional Commits compliant. `BREAKING CHANGE:` footer triggers mandatory major version bump.
+
+See `core/tooling-baseline.md` for required config file contents.
+
+---
+
 ## Changelog
 
 | Date | Version | Change |
 |------|---------|--------|
+| 2026-03-05 | 3.3.5 | Added §13 Developer Tooling Baseline (mandatory tooling layer, zero-tolerance rules, QG enforcement) |
 | 2026-03-04 | 3.2.0 | Added §9 API Versioning Contract, §10 Standard Error Contract, §11 Observability Baseline, §12 Structured Logging Contract |
 | 2026-03-04 | 3.1.0 | Added §6 API Semantics & Idempotency, §7 Mutation Determinism & Consistency, §8 API Anti-Patterns |
 | 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |
