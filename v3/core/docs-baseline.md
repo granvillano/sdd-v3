@@ -261,10 +261,54 @@ Example: "No versioning changes — N/A"]
 
 ---
 
+## 11. Audit File Naming Convention (v3.3.4)
+
+> **Rule:** Every file created in `audits/` MUST use the format `YYYY-MM-DD_HHMM_<slug>.md`.
+> Files are listed newest-first. This is mandatory — no free-form names.
+
+### 11.1 Format
+
+```
+audits/YYYY-MM-DD_HHMM_<slug>.md
+
+Examples:
+  2026-03-04_2026_chain-restoration.md
+  2026-03-04_1614_inputs-inbox-enforcement.md
+```
+
+- `YYYY-MM-DD` — ISO date of the change
+- `HHMM` — 24h local time, no colon
+- `<slug>` — 2–5 kebab-case words describing the change
+
+### 11.2 Rules
+
+| Rule | Detail |
+|------|--------|
+| **Always timestamped** | Date and time are MANDATORY. Never create audit files without them. |
+| **Newest first** | The file system sorts alphabetically = chronologically newest last. Document lists (README, changelogs) MUST show newest first. |
+| **Permanent** | Audit files are NEVER deleted or renamed after creation. |
+| **Created by AI** | The active agent creates the audit note at the end of every framework-modifying session. |
+
+### 11.3 Content Header (required)
+
+Every audit file MUST begin with:
+
+```markdown
+# <Title> — SDD v<X.Y.Z> Patch Audit
+
+> **Generated:** YYYY-MM-DD HH:MM
+> **Patch:** vX.Y.Z-prev → vX.Y.Z
+> **Type:** [PATCH|MINOR|MAJOR] — <one-line description>
+> **Status:** ✅ Complete
+```
+
+---
+
 ## Changelog
 
 | Date | Version | Change |
 |------|---------|--------|
+| 2026-03-04 | 3.3.4 | Added §11 Audit File Naming Convention (YYYY-MM-DD_HHMM_slug.md, mandatory, newest-first) |
 | 2026-03-04 | 3.2.2 | Added §10 Inputs Scan Evidence (required format, Brownfield gate rule, retention) |
 | 2026-03-04 | 3.2.0 | Added §8 api-contract.md Requirements (per-endpoint fields, document-level metadata, versioning/error/observability), §9 Change Impact PR sections |
 | 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

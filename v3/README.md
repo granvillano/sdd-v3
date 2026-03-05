@@ -1,7 +1,7 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.3.0 | **Date:** 2026-03-04 | **Status:** Active  
-> **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.0
+> **Version:** 3.3.4 | **Date:** 2026-03-04 | **Status:** Active  
+> **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x
 
 ---
 
@@ -73,18 +73,19 @@ v3/
 │
 ├── templates/project/           ← Scaffold copied into every new project
 │   ├── prompts/
-│   │   ├── 00-start-job.md      ← Short prompt: human pastes this to trigger jobs
-│   │   ├── 02-agent-entrypoint.md ← Master rules prompt (loaded by 00-start-job)
-│   │   └── 00-quick-run.md      ← Legacy quick-onboard prompt
+│   │   ├── 00-run.md              ← Minimal launcher: paste in AI to start any job
+│   │   ├── 02-agent-entrypoint.md ← Master rules prompt (fill identity fields once)
+│   │   ├── 00-start-job.md        ← Legacy / not scaffolded into new projects
+│   │   └── 00-quick-run.md        ← Legacy / not scaffolded into new projects
 │   ├── jobs/
-│   │   └── inbox.md             ← Job inbox with marker-based write zone
+│   │   └── inbox.md               ← Job inbox with marker-based write zone
 │   ├── docs/
 │   │   ├── 00_INDEX.md
 │   │   └── implementation-log.md
 │   └── PROJECT_BRIEF.template.md
 │
 ├── tools/
-│   └── sdd-init.sh              ← Project initializer CLI (v3.3.0)
+│   └── sdd-init.sh              ← Project initializer CLI (v3.3.2)
 │
 ├── handbook/                    ← Human-readable guides
 ├── audits/                      ← Audit reports (auto-generated, permanent)
@@ -113,8 +114,8 @@ If the directory already exists the script exits safely (idempotency guard).
 ```
 MyProjectName/
 ├── prompts/
-│   ├── 00-start-job.md          ← Paste this into Antigravity to run jobs
-│   └── 02-agent-entrypoint.md   ← Master rules prompt (fill in identity fields once)
+│   ├── 00-run.md                ← Paste into Antigravity to run any job
+│   └── 02-agent-entrypoint.md  ← Master rules prompt (fill in identity fields once)
 ├── jobs/
 │   ├── inbox.md                 ← Paste tasks here
 │   └── archive/                 ← Archived job prompts (AI-managed)
@@ -126,7 +127,6 @@ MyProjectName/
 │   ├── spec.md, architecture.md, api-contract.md, tickets.md, test-plan.md
 │   ├── adr/
 │   └── changes/                 ← Inputs scan evidence files
-├── .sdd/                        ← Framework prompt copies (internal)
 ├── sdd.config.yml               ← Project config (loaded by AI on every session)
 ├── PROJECT_BRIEF.md
 ├── CHANGELOG.md
@@ -151,20 +151,19 @@ SDD v3 uses a **pure inbox-driven execution model**. No terminal commands requir
 ### Running a job
 
 ```
-1. Paste your task in jobs/inbox.md below the marker:
+Step 1: Write your task in jobs/inbox.md below the marker:
 
-      ### ⬇️ A PARTIR DE AQUÍ PEGA EL PROMPT ⬇️
+         ### ⬇️ A PARTIR DE AQUÍ PEGA EL PROMPT ⬇️
 
-2. Open prompts/00-start-job.md
-3. Paste its full content into Antigravity as your prompt
+Step 2: Paste this into Antigravity:
 
-   → AI reads the inbox
-   → AI loads prompts/02-agent-entrypoint.md as rules
-   → AI executes without asking for confirmation
-   → AI archives the prompt to jobs/archive/YYYY-MM-DD_HHMM_<slug>.md
-   → AI resets the inbox to (PASTE YOUR TASK HERE)
-   → AI updates the Completed table and implementation-log.md
+         Execute prompts/00-run.md
 ```
+
+→ AI reads `prompts/00-run.md`  
+→ AI reads and applies `prompts/02-agent-entrypoint.md` (rules, gates, archive protocol)  
+→ AI reads the task from `jobs/inbox.md`  
+→ AI executes → archives to `jobs/archive/` → resets inbox  
 
 No scripts. No terminal. No file copying per session.
 
@@ -236,7 +235,11 @@ The framework itself follows these same conventions.
 | **3.2.2** | 2026-03-04 | `inputs/` folder scaffolded in every project; PRE-JOB INPUTS SCAN added to agent entrypoint; `docs/changes/` and `jobs/archive/` dirs created; QG-2 inputs scan evidence gate; `docs-baseline.md §10` |
 | **3.2.3** | 2026-03-04 | External runner removed; pure inbox-driven execution model; single visual marker in `inbox.md`; AI manages archive/clear; `workflow.md` updated with Job Execution Flow section |
 | **3.2.4** | 2026-03-04 | `prompts/` directory scaffolded in every project; `prompts/00-start-job.md` (short trigger) and `prompts/02-agent-entrypoint.md` (master rules) added to bootstrap |
-| **3.3.0** | 2026-03-04 | README full realignment to reflect real framework state; version summary formalized |
+| **3.3.4** | 2026-03-04 | Audit file naming convention enforced (`YYYY-MM-DD_HHMM_<slug>.md`); all 10 existing audit files renamed; `docs-baseline.md §11` added; `02-agent-entrypoint.md` STEP 4 item 9 added |
+| **3.3.3** | 2026-03-04 | Execution chain restored: `00-run.md` → `00-start-job.md` → `02-agent-entrypoint.md`; `00-start-job.md` re-added to scaffold with inbox-read + archive/clear logic |
+| **3.3.2** | 2026-03-04 | `00-run.md` introduced as minimal 1-line launcher; `.sdd/` removed from scaffold; `00-quick-run.md` no longer copied to new projects |
+| **3.3.1** | 2026-03-04 | Prompt deduplication: removed duplicate `.sdd/02-agent-entrypoint.md`; `00-quick-run.md` marked LEGACY |
+| **3.3.0** | 2026-03-04 | README full realignment to reflect real framework state |
 
 ---
 
@@ -260,13 +263,18 @@ The framework itself follows these same conventions.
 
 ## Audit Trail
 
+> **Naming convention:** `YYYY-MM-DD_HHMM_<slug>.md` — newest first.
+
 | Audit file | Covers |
 |-----------|--------|
-| [`BOOTSTRAP_REPORT.md`](audits/BOOTSTRAP_REPORT.md) | v3.0.0 initial bootstrap |
-| [`CORE_HARDENING_REPORT.md`](audits/CORE_HARDENING_REPORT.md) | v3.1.0 hardening pass |
-| [`CORE_EXPANSION_V3_2_REPORT.md`](audits/CORE_EXPANSION_V3_2_REPORT.md) | v3.2.0 expansion |
-| [`CLI_ROOT_ENFORCEMENT_PATCH.md`](audits/CLI_ROOT_ENFORCEMENT_PATCH.md) | v3.2.1 root enforcement |
-| [`INPUTS_INBOX_ENFORCEMENT_V3_2_2.md`](audits/INPUTS_INBOX_ENFORCEMENT_V3_2_2.md) | v3.2.2 inputs scan |
-| [`INBOX_MODEL_SIMPLIFICATION_V3_2_3.md`](audits/INBOX_MODEL_SIMPLIFICATION_V3_2_3.md) | v3.2.3 inbox model |
-| [`PROMPTS_SCAFFOLDING_V3_2_4.md`](audits/PROMPTS_SCAFFOLDING_V3_2_4.md) | v3.2.4 prompts scaffold |
-| [`README_REALIGNMENT_2026-03-04.md`](audits/README_REALIGNMENT_2026-03-04.md) | v3.3.0 README realignment |
+| [`2026-03-04_2026_audit-naming-convention.md`](audits/2026-03-04_2026_audit-naming-convention.md) | v3.3.4 audit naming convention |
+| [`2026-03-04_2017_chain-restoration.md`](audits/2026-03-04_2017_chain-restoration.md) | v3.3.3 execution chain restoration |
+| [`2026-03-04_1941_prompt-deduplication.md`](audits/2026-03-04_1941_prompt-deduplication.md) | v3.3.1 prompt deduplication |
+| [`2026-03-04_1801_readme-realignment.md`](audits/2026-03-04_1801_readme-realignment.md) | v3.3.0 README realignment |
+| [`2026-03-04_1757_prompts-scaffolding.md`](audits/2026-03-04_1757_prompts-scaffolding.md) | v3.2.4 prompts scaffold |
+| [`2026-03-04_1733_inbox-model-simplification.md`](audits/2026-03-04_1733_inbox-model-simplification.md) | v3.2.3 inbox model |
+| [`2026-03-04_1614_inputs-inbox-enforcement.md`](audits/2026-03-04_1614_inputs-inbox-enforcement.md) | v3.2.2 inputs scan |
+| [`2026-03-04_1130_cli-root-enforcement.md`](audits/2026-03-04_1130_cli-root-enforcement.md) | v3.2.1 root enforcement |
+| [`2026-03-04_1100_core-expansion-v3-2.md`](audits/2026-03-04_1100_core-expansion-v3-2.md) | v3.2.0 expansion |
+| [`2026-03-04_1030_core-hardening.md`](audits/2026-03-04_1030_core-hardening.md) | v3.1.0 hardening pass |
+| [`2026-03-04_1000_bootstrap-report.md`](audits/2026-03-04_1000_bootstrap-report.md) | v3.0.0 initial bootstrap |

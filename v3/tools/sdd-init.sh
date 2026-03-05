@@ -2,7 +2,7 @@
 # =============================================================================
 # SDD v3 — Project Initializer
 # tools/sdd-init.sh
-# Version: 3.2.4
+# Version: 3.3.4
 # =============================================================================
 # Usage:
 #   bash sdd-init.sh --project <project-name> --profile <profile-id>
@@ -37,7 +37,7 @@
 set -euo pipefail
 
 # ─── Constants ────────────────────────────────────────────────────────────────
-SDD_VERSION="3.2.4"
+SDD_VERSION="3.3.4"
 PROJECTS_ROOT="$HOME/Desktop/projects"
 
 # ─── Colors ──────────────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ echo ""
 # Step 1: Create project directory structure
 print_step "Creating project directory structure..."
 mkdir -p "$PROJECTS_ROOT"
-mkdir -p "$PROJECT_PATH"/{docs/{adr,changes},jobs/archive,inputs,.sdd,prompts}
+mkdir -p "$PROJECT_PATH"/{docs/{adr,changes},jobs/archive,inputs,prompts}
 
 print_success "Directory structure created: $PROJECT_PATH"
 
@@ -236,7 +236,7 @@ that the AI agent MUST scan before beginning any job.
 |------|--------|
 | **Read-only for AI** | Agents may read and summarize; they must NEVER modify, delete, or move files in this directory. |
 | **Human-managed** | Only humans add or remove files from `inputs/`. |
-| **Scanned before every job** | The PRE-JOB INPUTS SCAN (see `.sdd/02-agent-entrypoint.md`) is mandatory when this directory is non-empty. |
+| **Scanned before every job** | The PRE-JOB INPUTS SCAN (see `prompts/02-agent-entrypoint.md` STEP 0) is mandatory when this directory is non-empty. |
 | **Not mixed with docs/** | Reference files belong here, not in `docs/`. The `docs/` directory is for agent-generated output. |
 
 ---
@@ -277,8 +277,8 @@ print_success "inputs/README.md created."
 # Step 3: Copy templates
 print_step "Copying SDD v3 project templates..."
 
-cp "$TEMPLATES_DIR/prompts/00-quick-run.md"         "$PROJECT_PATH/.sdd/00-quick-run.md"
-cp "$TEMPLATES_DIR/prompts/02-agent-entrypoint.md"  "$PROJECT_PATH/.sdd/02-agent-entrypoint.md"
+# prompts/ — canonical user-facing directory
+cp "$TEMPLATES_DIR/prompts/00-run.md"               "$PROJECT_PATH/prompts/00-run.md"
 cp "$TEMPLATES_DIR/prompts/00-start-job.md"         "$PROJECT_PATH/prompts/00-start-job.md"
 cp "$TEMPLATES_DIR/prompts/02-agent-entrypoint.md"  "$PROJECT_PATH/prompts/02-agent-entrypoint.md"
 cp "$TEMPLATES_DIR/jobs/inbox.md"                   "$PROJECT_PATH/jobs/inbox.md"
@@ -403,7 +403,7 @@ echo -e "  1. Fill in ${BOLD}PROJECT_BRIEF.md${RESET}"
 echo -e "  2. Drop reference files into ${BOLD}inputs/${RESET} (Brownfield) or leave empty (Greenfield)"
 echo -e "  3. Open ${BOLD}prompts/02-agent-entrypoint.md${RESET} — fill in project identity fields"
 echo -e "  4. Paste tasks in ${BOLD}jobs/inbox.md${RESET} below the marker"
-echo -e "  5. Paste ${BOLD}prompts/00-start-job.md${RESET} into Antigravity to trigger execution"
+echo -e "  5. Paste ${BOLD}prompts/00-run.md${RESET} into Antigravity to trigger execution"
 echo ""
 echo -e "  ${BOLD}Framework:${RESET} $SDD_V3_ROOT"
 echo -e "  ${BOLD}Project:${RESET}   $PROJECT_PATH"

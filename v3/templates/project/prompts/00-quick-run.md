@@ -1,16 +1,31 @@
-# 00-quick-run.md — SDD v3 Quick Run Prompt
+# 00-quick-run.md — SDD v3 Quick-Run Prompt (LEGACY)
 
-> **Template:** `templates/project/prompts/00-quick-run.md`  
-> **Purpose:** Paste this prompt to onboard an AI assistant to an existing SDD v3 project instantly.
+> ⚠️ **LEGACY PROMPT — Not the canonical job launcher for SDD v3.2+**  
+> This file is kept for backwards compatibility only.  
+> **For new projects:** use `prompts/00-start-job.md` instead.
+
+---
+
+## What this is
+
+`00-quick-run.md` was the original SDD v3.0.0 onboarding prompt. It requires the human to fill in bracketed placeholders and describe the task inline. It was superseded in v3.2.3 by the **inbox-driven model** (`prompts/00-start-job.md` + `jobs/inbox.md`).
+
+This file lives in `.sdd/` (the internal framework directory) and is **not referenced by any current workflow**.
+
+## When to use
+
+- If you need a one-off AI session without writing to `jobs/inbox.md`.
+- If you are on SDD v3.0.0 or v3.1.0 and have not migrated to the inbox model.
+
+## Canonical workflow (v3.2.3+)
+
+1. Paste task in `jobs/inbox.md` below the marker.
+2. Paste `prompts/00-start-job.md` into Antigravity.
+3. AI handles everything.
 
 ---
 
-## Instructions
-
-Copy everything between the `---` delimiters and paste it as your first message in a new AI conversation.  
-Fill in `[BRACKETED]` placeholders before pasting.
-
----
+## Prompt (fill in brackets, then paste)
 
 ```
 You are operating as an SDD v3 AI development assistant on the [PROJECT NAME] project.

@@ -117,6 +117,22 @@ After successful execution, in this exact order:
 
 8. Confirm DoD checklist status (`core/definition-of-done.md`).
 
+9. **If this task modifies the SDD framework itself** (any file under `core/`, `tools/`, `templates/`, `agents/`, `profiles/`) →
+   Create an audit note at:
+   `[SDD_V3_ROOT]/audits/YYYY-MM-DD_HHMM_<slug>.md`
+
+   Required header:
+   ```
+   # <Title> — SDD v<X.Y.Z> Patch Audit
+   > Generated: YYYY-MM-DD HH:MM
+   > Patch: vX.Y.Z-prev → vX.Y.Z
+   > Type: [PATCH|MINOR|MAJOR] — <description>
+   > Status: ✅ Complete
+   ```
+   Naming rule: `YYYY-MM-DD_HHMM_<slug>.md` — mandatory. Never free-form names.
+   See `core/docs-baseline.md §11`.
+
+
 ---
 
 ## Quality Gate Summaries
