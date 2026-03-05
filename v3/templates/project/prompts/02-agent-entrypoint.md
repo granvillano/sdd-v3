@@ -1,6 +1,6 @@
 # SDD v3 — Master Agent Entrypoint
 # prompts/02-agent-entrypoint.md
-# Version: 3.4.0
+# Version: 3.6.0
 #
 # PURPOSE: This file defines the full workflow, gate rules, and post-job
 # protocol for every AI session on this project. It is loaded by 00-start-job.md.
@@ -127,20 +127,14 @@ After successful execution, in this exact order:
 
 8. Confirm DoD checklist status (`core/definition-of-done.md`).
 
-9. **If this task modifies the SDD framework itself** (any file under `core/`, `tools/`, `templates/`, `agents/`, `profiles/`) →
-   Create an audit note at:
-   `[SDD_V3_ROOT]/audits/YYYY-MM-DD_HHMM_<slug>.md`
-
-   Required header:
-   ```
-   # <Title> — SDD v<X.Y.Z> Patch Audit
-   > Generated: YYYY-MM-DD HH:MM
-   > Patch: vX.Y.Z-prev → vX.Y.Z
-   > Type: [PATCH|MINOR|MAJOR] — <description>
-   > Status: ✅ Complete
-   ```
-   Naming rule: `YYYY-MM-DD_HHMM_<slug>.md` — mandatory. Never free-form names.
-   See `core/docs-baseline.md §11`.
+9. **If this task modifies the SDD framework itself** (any file under `core/`, `tools/`, `templates/`, `agents/`, `profiles/`, `task-types/`) →
+   You MUST execute the **Framework Change Protocol** (`core/workflow.md`):
+   - **Check 1:** Was `CHANGELOG.md` updated with an entry for this change?
+   - **Check 2:** If the change affects runtime behavior, workflow, gates, or developer-facing usage, was `README.md` updated? (Explicit triggers: modifying `core/workflow.md`, `core/gates.md`, `core/engineering-standards.md`, `core/security-baseline.md`, `prompts/02-agent-entrypoint.md`, `tools/sdd-init.sh`, or `templates/project/*`).
+   - **Enforcement:** If any required update is missing, output EXACTLY:
+     `[FRAMEWORK HARD STOP] Missing mandatory README/CHANGELOG update for framework change. Stopping.`
+     and HALT execution immediately.
+   - **Audit Note:** Create an audit note at `[SDD_V3_ROOT]/audits/YYYY-MM-DD_HHMM_<slug>.md` using the exact required header format (see `core/docs-baseline.md §11`).
 
 
 ---

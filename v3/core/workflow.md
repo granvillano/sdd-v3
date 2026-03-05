@@ -221,22 +221,26 @@ Files found: <count>
 3. Execute CI/CD pipeline.
 4. Update `implementation-log.md` with deploy record.
 
-## Framework Consistency Inspection (Mandatory)
+## Framework Change Protocol (Mandatory)
 
-This step is a **HARD REQUIREMENT** for any job modifying the SDD v3 framework itself.
+This protocol is a **HARD REQUIREMENT** for any job modifying the SDD v3 framework itself.
 
 | Field | Value |
 |-------|-------|
-| **Trigger** | Any modification to files in: `core/`, `prompts/`, `templates/`, `profiles/`, `tools/` |
-| **When to run** | Immediately before closing the job |
-| **Minimum target set** | `README.md`, `CHANGELOG.md`, `core/00_INDEX.md`, `core/workflow.md`, `core/definition-of-done.md`, `core/engineering-standards.md`, `core/traceability-baseline.md`, `profiles/*` |
+| **Trigger** | Any modification to files under: `core/**`, `tools/**`, `templates/**`, `agents/**`, `profiles/**`, `task-types/**` |
+| **When to run** | POST-JOB |
 
-### Rules & Outcomes
-1. **Audit:** The agent MUST read the minimum target set to ensure the new change does not contradict existing SSOT, miss an index registration, or leave documentation out of sync.
-2. **Auto-fix:** If inconsistencies are found, the agent MUST auto-fix them within the same job session.
-3. **Semver:** If the framework change introduces new runtime behavior, new SSOT files, or altered prompts, the agent MUST bump the framework version correctly (MINOR for new non-breaking features, PATCH for fixes) and update all version headers consistently.
+### Mandatory Outputs
+1. **Audit Note:** `audits/YYYY-MM-DD_HHMM_<slug>.md`.
+2. **Changelog:** `CHANGELOG.md` updated with an entry for the new version.
+3. **Readme:** `README.md` updated **IF** the change affects runtime behavior, workflow, gates, or developer-facing usage.
 
-No agent or human may skip this check.
+### SemVer Bump Rules
+- **PATCH:** Documentation, tooling, or internal corrections without behavior change.
+- **MINOR:** Behavior/workflow changes (e.g., routing enforcement, new gate requirements).
+- **MAJOR:** Breaking change in contract or execution chain.
+
+No agent or human may skip this protocol.
 
 ---
 

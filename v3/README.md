@@ -1,6 +1,6 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.5.0 | **Date:** 2026-03-05 | **Status:** Active  
+> **Version:** 3.6.0 | **Date:** 2026-03-05 | **Status:** Active  
 > **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x
 
 ---
@@ -237,22 +237,9 @@ The framework itself follows these same conventions.
 
 ## Framework Changelog
 
-| Version | Date | Summary |
-|---------|------|---------|
-| **3.5.0** | 2026-03-05 | Mandatory Framework Consistency Inspection added to lifecycle; commit scope rules for framework vs project repos codified in traceability baseline. |
-| **3.4.0** | 2026-03-05 | `core/agent-routing.md` SSOT added; binary PASS/STOP routing enforcement injected into `02-agent-entrypoint.md` (template + existing projects) based on task category vs agent role |
-| **3.3.4** | 2026-03-04 | Audit file naming convention enforced (`YYYY-MM-DD_HHMM_<slug>.md`); all 10 existing audit files renamed; `docs-baseline.md §11` added; `02-agent-entrypoint.md` STEP 4 item 9 added |
-| **3.3.3** | 2026-03-04 | Execution chain restored: `00-run.md` → `00-start-job.md` → `02-agent-entrypoint.md`; `00-start-job.md` re-added to scaffold with inbox-read + archive/clear logic |
-| **3.3.2** | 2026-03-04 | `00-run.md` introduced as minimal 1-line launcher; `.sdd/` removed from scaffold; `00-quick-run.md` no longer copied to new projects |
-| **3.3.1** | 2026-03-04 | Prompt deduplication: removed duplicate `.sdd/02-agent-entrypoint.md`; `00-quick-run.md` marked LEGACY |
-| **3.3.0** | 2026-03-04 | README full realignment to reflect real framework state |
-| **3.2.4** | 2026-03-04 | `prompts/` directory scaffolded in every project; `prompts/00-start-job.md` (short trigger) and `prompts/02-agent-entrypoint.md` (master rules) added to bootstrap |
-| **3.2.3** | 2026-03-04 | External runner removed; pure inbox-driven execution model; single visual marker in `inbox.md`; AI manages archive/clear; `workflow.md` updated with Job Execution Flow section |
-| **3.2.2** | 2026-03-04 | `inputs/` folder scaffolded in every project; PRE-JOB INPUTS SCAN added to agent entrypoint; `docs/changes/` and `jobs/archive/` dirs created; QG-2 inputs scan evidence gate; `docs-baseline.md §10` |
-| **3.2.1** | 2026-03-04 | `sdd-init.sh` deterministic root: `--project` accepts name only; all projects created in `~/Desktop/projects/`; idempotency guard |
-| **3.2.0** | 2026-03-04 | Core expansion: API Versioning Contract (§9), Standard Error Contract (§10), Observability Baseline (§11), Structured Logging Contract (§12) added to `engineering-standards.md`; `security-baseline.md` §10 PII logging; gates hardened for QG-2/3/4/5 |
-| **3.1.0** | 2026-03-04 | Core hardening: idempotency contract and BOLA protection in `engineering-standards.md` and `security-baseline.md`; QG-2/QG-4 gate criteria hardened |
-| **3.0.0** | 2026-03-04 | Initial bootstrap. 8 core SSOT files, 5 profiles, 9 task-types, 9 agents, project templates, `sdd-init.sh` |
+The full framework history is now maintained in the dedicated [`CHANGELOG.md`](CHANGELOG.md) file at the root of the repository.
+
+*Note: As of v3.6.0, updating the `CHANGELOG.md` (and `README.md` on behavior change) is a hard-enforced mandatory gateway for all framework modifications.*
 
 ---
 
@@ -287,6 +274,8 @@ The framework itself follows these same conventions.
 | [`2026-03-04_1801_readme-realignment.md`](audits/2026-03-04_1801_readme-realignment.md) | v3.3.0 README realignment |
 | [`2026-03-04_1757_prompts-scaffolding.md`](audits/2026-03-04_1757_prompts-scaffolding.md) | v3.2.4 prompts scaffold |
 | [`2026-03-04_1733_inbox-model-simplification.md`](audits/2026-03-04_1733_inbox-model-simplification.md) | v3.2.3 inbox model |
+| [`2026-03-05_1955_framework-readme-changelog-enforcement.md`](audits/2026-03-05_1955_framework-readme-changelog-enforcement.md) | v3.6.0 Mandatory README and CHANGELOG enforcement protocol |
+| [`2026-03-05_1938_docs-consistency-auto-enforcement.md`](audits/2026-03-05_1938_docs-consistency-auto-enforcement.md) | v3.5.0 Consistency Inspection + Commit Scopes |
 | [`2026-03-04_1614_inputs-inbox-enforcement.md`](audits/2026-03-04_1614_inputs-inbox-enforcement.md) | v3.2.2 inputs scan |
 | [`2026-03-04_1130_cli-root-enforcement.md`](audits/2026-03-04_1130_cli-root-enforcement.md) | v3.2.1 root enforcement |
 | [`2026-03-04_1100_core-expansion-v3-2.md`](audits/2026-03-04_1100_core-expansion-v3-2.md) | v3.2.0 expansion |
