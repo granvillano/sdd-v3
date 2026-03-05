@@ -1,7 +1,7 @@
 # core/workflow.md — SDD v3 Development Lifecycle
 
 > **SSOT Domain:** Lifecycle | **Inherits:** none (root document)  
-> **Version:** 3.2.3
+> **Version:** 3.5.0
 
 ---
 
@@ -221,12 +221,30 @@ Files found: <count>
 3. Execute CI/CD pipeline.
 4. Update `implementation-log.md` with deploy record.
 
+## Framework Consistency Inspection (Mandatory)
+
+This step is a **HARD REQUIREMENT** for any job modifying the SDD v3 framework itself.
+
+| Field | Value |
+|-------|-------|
+| **Trigger** | Any modification to files in: `core/`, `prompts/`, `templates/`, `profiles/`, `tools/` |
+| **When to run** | Immediately before closing the job |
+| **Minimum target set** | `README.md`, `CHANGELOG.md`, `core/00_INDEX.md`, `core/workflow.md`, `core/definition-of-done.md`, `core/engineering-standards.md`, `core/traceability-baseline.md`, `profiles/*` |
+
+### Rules & Outcomes
+1. **Audit:** The agent MUST read the minimum target set to ensure the new change does not contradict existing SSOT, miss an index registration, or leave documentation out of sync.
+2. **Auto-fix:** If inconsistencies are found, the agent MUST auto-fix them within the same job session.
+3. **Semver:** If the framework change introduces new runtime behavior, new SSOT files, or altered prompts, the agent MUST bump the framework version correctly (MINOR for new non-breaking features, PATCH for fixes) and update all version headers consistently.
+
+No agent or human may skip this check.
+
 ---
 
 ## Changelog
 
 | Date | Version | Change |
 |------|---------|--------|
+| 2026-03-05 | 3.5.0 | Added mandatory Framework Consistency Inspection section to lifecycle |
 | 2026-03-04 | 3.2.3 | Replaced external runner model with pure inbox-driven AI execution; added Job Execution Flow section; no CLI scripts required |
 | 2026-03-04 | 3.2.2 | Added PRE-JOB Inputs Scan phase; Phase 3 activities updated with inputs scan gate check |
 | 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

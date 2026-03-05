@@ -1,7 +1,7 @@
 # core/definition-of-done.md — SDD v3 Definition of Done
 
 > **SSOT Domain:** Acceptance Criteria | **Inherits:** none  
-> **Version:** 3.0.0
+> **Version:** 3.5.0
 
 This checklist applies to **every task** regardless of type, profile or agent.  
 Task-types may add additional criteria but may never remove items from this list.
@@ -52,6 +52,11 @@ Task-types may add additional criteria but may never remove items from this list
 - [ ] **QG-4 E2E GATE:** All E2E tests pass before merging.
 - [ ] PR has at least 1 reviewer approval (human or designated agent).
 - [ ] Product owner confirmed the implementation matches the business goal.
+
+### 8. Framework Modifications (SDD Maintainers Only)
+- [ ] If touching `core/`, `prompts/`, `templates/`, `profiles/`, or `tools/`: The **Framework Consistency Inspection** (see `core/workflow.md`) MUST be completed.
+- [ ] Appropriate framework version bump applied and changelog updated.
+- [ ] Explicit audit note created in `audits/` via standard naming convention.
 
 ---
 

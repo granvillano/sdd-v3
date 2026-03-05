@@ -1,6 +1,6 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.3.4 | **Date:** 2026-03-04 | **Status:** Active  
+> **Version:** 3.5.0 | **Date:** 2026-03-05 | **Status:** Active  
 > **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x
 
 ---
@@ -33,6 +33,7 @@ v3/
 ├── core/                        ← Universal SSOT rules (all projects inherit)
 │   ├── 00_INDEX.md              ← Master index of all core domains
 │   ├── workflow.md              ← 7-phase lifecycle + PRE-JOB inputs scan
+│   ├── agent-routing.md         ← Agent Decision Matrix + PASS/STOP enforcement
 │   ├── gates.md                 ← QG-1 … QG-5 with full pass/block criteria
 │   ├── definition-of-done.md   ← Universal DoD checklist
 │   ├── engineering-standards.md ← SOLID, API versioning, error contract,
@@ -181,6 +182,16 @@ If you are working on an **existing codebase**, drop reference files into `input
 
 ---
 
+## Agent Routing (PASS/STOP Enforcement)
+
+Every task pasted into the inbox MUST be classified against the `core/agent-routing.md` Decision Matrix before execution begins.
+
+1. **Classification:** The AI reads the task and maps it to a category (e.g., `backend`, `architecture`, `docs-only`).
+2. **Role Verification:** The AI compares the required role for that category against its own active system prompt.
+3. **HARD STOP:** If there is a mismatch, the AI declares `[ROUTING HARD STOP]` and halts immediately. There is no "best effort" execution. 
+
+---
+
 ## Quality Gate System
 
 | Gate | Name | Trigger | Key checks |
@@ -228,18 +239,20 @@ The framework itself follows these same conventions.
 
 | Version | Date | Summary |
 |---------|------|---------|
-| **3.0.0** | 2026-03-04 | Initial bootstrap. 8 core SSOT files, 5 profiles, 9 task-types, 9 agents, project templates, `sdd-init.sh` |
-| **3.1.0** | 2026-03-04 | Core hardening: idempotency contract and BOLA protection in `engineering-standards.md` and `security-baseline.md`; QG-2/QG-4 gate criteria hardened |
-| **3.2.0** | 2026-03-04 | Core expansion: API Versioning Contract (§9), Standard Error Contract (§10), Observability Baseline (§11), Structured Logging Contract (§12) added to `engineering-standards.md`; `security-baseline.md` §10 PII logging; gates hardened for QG-2/3/4/5 |
-| **3.2.1** | 2026-03-04 | `sdd-init.sh` deterministic root: `--project` accepts name only; all projects created in `~/Desktop/projects/`; idempotency guard |
-| **3.2.2** | 2026-03-04 | `inputs/` folder scaffolded in every project; PRE-JOB INPUTS SCAN added to agent entrypoint; `docs/changes/` and `jobs/archive/` dirs created; QG-2 inputs scan evidence gate; `docs-baseline.md §10` |
-| **3.2.3** | 2026-03-04 | External runner removed; pure inbox-driven execution model; single visual marker in `inbox.md`; AI manages archive/clear; `workflow.md` updated with Job Execution Flow section |
-| **3.2.4** | 2026-03-04 | `prompts/` directory scaffolded in every project; `prompts/00-start-job.md` (short trigger) and `prompts/02-agent-entrypoint.md` (master rules) added to bootstrap |
+| **3.5.0** | 2026-03-05 | Mandatory Framework Consistency Inspection added to lifecycle; commit scope rules for framework vs project repos codified in traceability baseline. |
+| **3.4.0** | 2026-03-05 | `core/agent-routing.md` SSOT added; binary PASS/STOP routing enforcement injected into `02-agent-entrypoint.md` (template + existing projects) based on task category vs agent role |
 | **3.3.4** | 2026-03-04 | Audit file naming convention enforced (`YYYY-MM-DD_HHMM_<slug>.md`); all 10 existing audit files renamed; `docs-baseline.md §11` added; `02-agent-entrypoint.md` STEP 4 item 9 added |
 | **3.3.3** | 2026-03-04 | Execution chain restored: `00-run.md` → `00-start-job.md` → `02-agent-entrypoint.md`; `00-start-job.md` re-added to scaffold with inbox-read + archive/clear logic |
 | **3.3.2** | 2026-03-04 | `00-run.md` introduced as minimal 1-line launcher; `.sdd/` removed from scaffold; `00-quick-run.md` no longer copied to new projects |
 | **3.3.1** | 2026-03-04 | Prompt deduplication: removed duplicate `.sdd/02-agent-entrypoint.md`; `00-quick-run.md` marked LEGACY |
 | **3.3.0** | 2026-03-04 | README full realignment to reflect real framework state |
+| **3.2.4** | 2026-03-04 | `prompts/` directory scaffolded in every project; `prompts/00-start-job.md` (short trigger) and `prompts/02-agent-entrypoint.md` (master rules) added to bootstrap |
+| **3.2.3** | 2026-03-04 | External runner removed; pure inbox-driven execution model; single visual marker in `inbox.md`; AI manages archive/clear; `workflow.md` updated with Job Execution Flow section |
+| **3.2.2** | 2026-03-04 | `inputs/` folder scaffolded in every project; PRE-JOB INPUTS SCAN added to agent entrypoint; `docs/changes/` and `jobs/archive/` dirs created; QG-2 inputs scan evidence gate; `docs-baseline.md §10` |
+| **3.2.1** | 2026-03-04 | `sdd-init.sh` deterministic root: `--project` accepts name only; all projects created in `~/Desktop/projects/`; idempotency guard |
+| **3.2.0** | 2026-03-04 | Core expansion: API Versioning Contract (§9), Standard Error Contract (§10), Observability Baseline (§11), Structured Logging Contract (§12) added to `engineering-standards.md`; `security-baseline.md` §10 PII logging; gates hardened for QG-2/3/4/5 |
+| **3.1.0** | 2026-03-04 | Core hardening: idempotency contract and BOLA protection in `engineering-standards.md` and `security-baseline.md`; QG-2/QG-4 gate criteria hardened |
+| **3.0.0** | 2026-03-04 | Initial bootstrap. 8 core SSOT files, 5 profiles, 9 task-types, 9 agents, project templates, `sdd-init.sh` |
 
 ---
 
@@ -267,6 +280,7 @@ The framework itself follows these same conventions.
 
 | Audit file | Covers |
 |-----------|--------|
+| [`2026-03-05_1935_agent-routing-matrix.md`](audits/2026-03-05_1935_agent-routing-matrix.md) | v3.4.0 Agent Routing Decision Matrix |
 | [`2026-03-04_2026_audit-naming-convention.md`](audits/2026-03-04_2026_audit-naming-convention.md) | v3.3.4 audit naming convention |
 | [`2026-03-04_2017_chain-restoration.md`](audits/2026-03-04_2017_chain-restoration.md) | v3.3.3 execution chain restoration |
 | [`2026-03-04_1941_prompt-deduplication.md`](audits/2026-03-04_1941_prompt-deduplication.md) | v3.3.1 prompt deduplication |

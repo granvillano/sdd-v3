@@ -1,6 +1,6 @@
 # SDD v3 — Master Agent Entrypoint
 # prompts/02-agent-entrypoint.md
-# Version: 3.2.4
+# Version: 3.4.0
 #
 # PURPOSE: This file defines the full workflow, gate rules, and post-job
 # protocol for every AI session on this project. It is loaded by 00-start-job.md.
@@ -45,13 +45,14 @@ Before any planning or code generation:
 Read and internalize (from SDD v3 root):
 1. `core/00_INDEX.md`
 2. `core/workflow.md`
-3. `core/gates.md`
-4. `core/definition-of-done.md`
-5. `core/engineering-standards.md`
-6. `core/security-baseline.md`
-7. `core/traceability-baseline.md`
-8. `core/docs-baseline.md`
-9. `profiles/<profile>/profile.md`
+3. `core/agent-routing.md`
+4. `core/gates.md`
+5. `core/definition-of-done.md`
+6. `core/engineering-standards.md`
+7. `core/security-baseline.md`
+8. `core/traceability-baseline.md`
+9. `core/docs-baseline.md`
+10. `profiles/<profile>/profile.md`
 
 ---
 
@@ -78,7 +79,16 @@ State active context before starting:
 - Active ticket (if any)
 - Project type (Greenfield / Brownfield)
 
-Execute strictly per your agent constraints. No deviations from spec without explicit approval. No gate bypasses.
+**ROUTING ENFORCEMENT (HARD STOP)**
+
+Before writing any plan or code, you MUST classify the task according to `core/agent-routing.md`:
+1. Classify the task from `jobs/inbox.md` into one of the matrix Categories.
+2. Output EXACTLY:
+   `[ROUTING] Task Category: <Category>`
+   `[ROUTING] Assigned Role: <Your Agent Role>`
+3. **HARD STOP**: If your `<Your Agent Role>` does NOT MATCH the matrix's "Required Agent Role" for that Category, you MUST stop execution immediately and print: `[ROUTING HARD STOP] Task requires <Required Agent Role>, but current agent is <Your Agent Role>. Stopping execution.`
+
+Execute strictly per your agent constraints ONLY IF routing passes. No deviations from spec without explicit approval. No gate bypasses.
 
 ---
 

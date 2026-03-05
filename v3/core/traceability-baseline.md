@@ -1,7 +1,7 @@
 # core/traceability-baseline.md — SDD v3 Traceability Baseline
 
 > **SSOT Domain:** Traceability | **Inherits:** none  
-> **Version:** 3.2.0  
+> **Version:** 3.5.0  
 > **Reference:** Conventional Commits v1.0.0, Semantic Versioning 2.0.0
 
 ---
@@ -229,9 +229,21 @@ Before tagging a release, the `traceability_agent` MUST verify:
 
 ---
 
+## 7. Commit Scope Rules (Framework vs Projects)
+
+To prevent accidental cross-repository contamination, the following hard rule applies:
+
+- **When operating inside the SDD framework repository (`SDD-V3`):** All Git commits MUST target the framework repository exclusively. 
+- **Arbitrary Project Repos:** You MUST NOT commit to external project repositories (e.g. `~/Desktop/projects/*`) unless the job explicitly targets them AND that repo is strictly in scope for the task. 
+
+Cross-repo commits in a single session mask the traceability chain. Stay within the operational boundary defined by the job.
+
+---
+
 ## Changelog
 
 | Date | Version | Change |
 |------|---------|--------|
+| 2026-03-05 | 3.5.0 | Added §7 Commit Scope Rules prohibiting unintended cross-repo commits |
 | 2026-03-04 | 3.2.0 | §1 Traceability chain updated; §3 BREAKING CHANGE footer made mandatory; §4 PR template extended with Change Impact sections; §5 Breaking change → major bump rule enforced, release notes required sections added; §6 QG-5 verification extended with 3 new checks |
 | 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |
