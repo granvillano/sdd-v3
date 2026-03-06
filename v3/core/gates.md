@@ -1,7 +1,6 @@
 # core/gates.md — SDD v3 Quality Gates
 
 > **SSOT Domain:** Quality Control | **Inherits:** none  
-> **Version:** 3.2.2
 
 ---
 
@@ -140,11 +139,3 @@ Agents are responsible for self-enforcement. If an agent detects a gate failure,
 
 ---
 
-## Changelog
-
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-04 | 3.2.2 | QG-2: added Inputs Scan Evidence requirement (Brownfield gate) |
-| 2026-03-04 | 3.2.0 | QG-2: added versioning strategy, error contract, observability docs; QG-3: added request_id enforcement, error contract enforcement, structured logging check; QG-4: added error contract E2E tests, request_id verification, PII log check, deprecation headers; QG-5: added breaking change → major version enforcement |
-| 2026-03-04 | 3.1.0 | QG-2: added idempotency and authorization strategy requirements; QG-3: added auth middleware check and undeclared endpoint rule; QG-4: added BOLA test case verification and retry behavior validation |
-| 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

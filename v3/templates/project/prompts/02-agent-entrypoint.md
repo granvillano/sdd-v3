@@ -1,6 +1,6 @@
 # SDD v3 — Master Agent Entrypoint
 # prompts/02-agent-entrypoint.md
-# Version: 3.7.0
+# Version: 3.7.1
 #
 # PURPOSE: This file defines the full workflow, gate rules, and post-job
 # protocol for every AI session on this project. It is loaded by 00-start-job.md.

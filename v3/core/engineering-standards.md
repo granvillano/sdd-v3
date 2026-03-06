@@ -1,7 +1,6 @@
 # core/engineering-standards.md — SDD v3 Engineering Standards
 
 > **SSOT Domain:** Code Quality | **Inherits:** none  
-> **Version:** 3.3.5
 
 ---
 
@@ -624,11 +623,3 @@ See `core/tooling-baseline.md` for required config file contents.
 
 ---
 
-## Changelog
-
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-05 | 3.3.5 | Added §13 Developer Tooling Baseline (mandatory tooling layer, zero-tolerance rules, QG enforcement) |
-| 2026-03-04 | 3.2.0 | Added §9 API Versioning Contract, §10 Standard Error Contract, §11 Observability Baseline, §12 Structured Logging Contract |
-| 2026-03-04 | 3.1.0 | Added §6 API Semantics & Idempotency, §7 Mutation Determinism & Consistency, §8 API Anti-Patterns |
-| 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

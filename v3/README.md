@@ -1,6 +1,6 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.7.0 | **Date:** 2026-03-05 | **Status:** Active  
+> **Version:** 3.7.1 | **Date:** 2026-03-06 | **Status:** Active  
 > **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x
 
 ---
@@ -274,6 +274,7 @@ The full framework history is now maintained in the dedicated [`CHANGELOG.md`](C
 | [`2026-03-04_1801_readme-realignment.md`](audits/2026-03-04_1801_readme-realignment.md) | v3.3.0 README realignment |
 | [`2026-03-04_1757_prompts-scaffolding.md`](audits/2026-03-04_1757_prompts-scaffolding.md) | v3.2.4 prompts scaffold |
 | [`2026-03-04_1733_inbox-model-simplification.md`](audits/2026-03-04_1733_inbox-model-simplification.md) | v3.2.3 inbox model |
+| [`2026-03-06_1410_versioning-ssot-cleanup.md`](audits/2026-03-06_1410_versioning-ssot-cleanup.md) | v3.7.1 Versioning SSOT hardening |
 | [`2026-03-05_1956_auto-git-protocol.md`](audits/2026-03-05_1956_auto-git-protocol.md) | v3.7.0 Target Detection + Auto-Git Protocol |
 | [`2026-03-05_1955_framework-readme-changelog-enforcement.md`](audits/2026-03-05_1955_framework-readme-changelog-enforcement.md) | v3.6.0 Mandatory README and CHANGELOG enforcement protocol |
 | [`2026-03-05_1938_docs-consistency-auto-enforcement.md`](audits/2026-03-05_1938_docs-consistency-auto-enforcement.md) | v3.5.0 Consistency Inspection + Commit Scopes |

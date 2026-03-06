@@ -1,7 +1,6 @@
 # core/workflow.md — SDD v3 Development Lifecycle
 
 > **SSOT Domain:** Lifecycle | **Inherits:** none (root document)  
-> **Version:** 3.5.0
 
 ---
 
@@ -244,11 +243,3 @@ No agent or human may skip this protocol.
 
 ---
 
-## Changelog
-
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-05 | 3.5.0 | Added mandatory Framework Consistency Inspection section to lifecycle |
-| 2026-03-04 | 3.2.3 | Replaced external runner model with pure inbox-driven AI execution; added Job Execution Flow section; no CLI scripts required |
-| 2026-03-04 | 3.2.2 | Added PRE-JOB Inputs Scan phase; Phase 3 activities updated with inputs scan gate check |
-| 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

@@ -1,7 +1,6 @@
 # core/security-baseline.md — SDD v3 Security Baseline
 
 > **SSOT Domain:** Security | **Inherits:** none  
-> **Version:** 3.2.0  
 > **Reference:** OWASP Top 10 (2021 edition), OWASP API Security Top 10 (2023 edition)
 
 ---
@@ -253,10 +252,3 @@ See for example:
 
 ---
 
-## Changelog
-
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-04 | 3.2.0 | Added §10 Sensitive Data Logging & Redaction with masking rules, log-safe design patterns, and PII logging review gate |
-| 2026-03-04 | 3.1.0 | Added §8 BOLA Protection (checklist, test cases, patterns), §9 Anti-Replay & Idempotency Protection |
-| 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

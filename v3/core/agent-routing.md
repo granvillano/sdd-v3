@@ -1,7 +1,6 @@
 # core/agent-routing.md — Agent Routing Matrix
 
 > **SSOT Domain:** Agent Routing | **Inherits:** workflow.md  
-> **Version:** 3.4.0
 
 ---
 

@@ -1,7 +1,6 @@
 # core/definition-of-done.md — SDD v3 Definition of Done
 
 > **SSOT Domain:** Acceptance Criteria | **Inherits:** none  
-> **Version:** 3.5.0
 
 This checklist applies to **every task** regardless of type, profile or agent.  
 Task-types may add additional criteria but may never remove items from this list.

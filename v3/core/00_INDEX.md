@@ -61,8 +61,3 @@ If a conflict exists, the higher-level rule wins. Document the exception with an
 
 ---
 
-## Changelog
-
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

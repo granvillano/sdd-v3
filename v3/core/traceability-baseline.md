@@ -1,7 +1,6 @@
 # core/traceability-baseline.md — SDD v3 Traceability Baseline
 
 > **SSOT Domain:** Traceability | **Inherits:** none  
-> **Version:** 3.7.0  
 > **Reference:** Conventional Commits v1.0.0, Semantic Versioning 2.0.0
 
 ---
@@ -258,11 +257,8 @@ The agent MUST autonomously execute the following BEFORE finishing the job:
 
 ---
 
-## Changelog
+## 9. Version SSOT Constraint
 
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-05 | 3.7.0 | Added §8 Target Detection + Auto-Git Protocol strictly enforcing framework commit automation |
-| 2026-03-05 | 3.5.0 | Added §7 Commit Scope Rules prohibiting unintended cross-repo commits |
-| 2026-03-04 | 3.2.0 | §1 Traceability chain updated; §3 BREAKING CHANGE footer made mandatory; §4 PR template extended with Change Impact sections; §5 Breaking change → major bump rule enforced, release notes required sections added; §6 QG-5 verification extended with 3 new checks |
-| 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |
+Framework version is defined ONLY in `README.md` and `CHANGELOG.md`.  
+No `core/*.md` document may declare its own version or changelog.
+

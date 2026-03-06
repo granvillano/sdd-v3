@@ -1,7 +1,6 @@
 # core/docs-baseline.md — SDD v3 Documentation Baseline
 
 > **SSOT Domain:** Documentation | **Inherits:** none  
-> **Version:** 3.2.2
 
 ---
 
@@ -304,11 +303,3 @@ Every audit file MUST begin with:
 
 ---
 
-## Changelog
-
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-04 | 3.3.4 | Added §11 Audit File Naming Convention (YYYY-MM-DD_HHMM_slug.md, mandatory, newest-first) |
-| 2026-03-04 | 3.2.2 | Added §10 Inputs Scan Evidence (required format, Brownfield gate rule, retention) |
-| 2026-03-04 | 3.2.0 | Added §8 api-contract.md Requirements (per-endpoint fields, document-level metadata, versioning/error/observability), §9 Change Impact PR sections |
-| 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

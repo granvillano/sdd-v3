@@ -1,7 +1,6 @@
 # core/tooling-baseline.md — SDD v3 Developer Tooling Baseline
 
 > **SSOT Domain:** Code Quality / Developer Tooling | **Inherits:** engineering-standards.md  
-> **Version:** 3.3.5
 
 ---
 
@@ -236,8 +235,3 @@ All tooling checks MUST run in CI in addition to pre-commit hooks. **Hooks alone
 
 ---
 
-## Changelog
-
-| Date | Version | Change |
-|------|---------|--------|
-| 2026-03-05 | 3.3.5 | Initial creation — Linting, Formatting, Commitlint, Husky, lint-staged baseline |

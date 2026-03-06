@@ -4,6 +4,11 @@ All notable changes to the SDD v3 framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.1] - 2026-03-06
+### Removed
+- **Versioning SSOT Hardening:** Removed fragmented version headers and local changelog tables from all `core/*` documents to strictly enforce `README.md` and `CHANGELOG.md` as the exclusive single sources of truth for framework versioning.
+- Added explicit SSOT rule to `traceability-baseline.md`.
+
 ## [3.7.0] - 2026-03-05
 ### Added
 - **Target Detection + Auto-Git Protocol:** Added Section 8 to `traceability-baseline.md` mandating deterministic repository target detection (Framework vs Project) and automated Git commits for framework-level changes.
