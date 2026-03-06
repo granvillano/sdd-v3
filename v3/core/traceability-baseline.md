@@ -1,7 +1,7 @@
 # core/traceability-baseline.md — SDD v3 Traceability Baseline
 
 > **SSOT Domain:** Traceability | **Inherits:** none  
-> **Version:** 3.5.0  
+> **Version:** 3.7.0  
 > **Reference:** Conventional Commits v1.0.0, Semantic Versioning 2.0.0
 
 ---
@@ -238,12 +238,31 @@ To prevent accidental cross-repository contamination, the following hard rule ap
 
 Cross-repo commits in a single session mask the traceability chain. Stay within the operational boundary defined by the job.
 
+## 8. Target Detection + Auto-Git Protocol
+
+To ensure framework changes are strictly documented and isolated, every agent MUST apply the following deterministic rules when saving work:
+
+**Detection Rules:**
+- **FrameworkChanged:** `true` IF any modified file path begins with `v3/core`, `v3/tools`, `v3/templates`, `v3/agents`, `v3/profiles`, `v3/task-types`, `v3/prompts`, or touches `v3/README.md`, `v3/CHANGELOG.md`, `v3/audits`.
+- **ProjectChanged:** `true` IF any modified file path falls under `[PROJECT_ROOT]` (Note: this protocol does not apply to projects, only the framework).
+
+**Auto-Git Protocol (If FrameworkChanged == true):**
+The agent MUST autonomously execute the following BEFORE finishing the job:
+1. Update `v3/CHANGELOG.md` with an entry for the change (Mandatory).
+2. Update `v3/README.md` IF runtime behavior, workflow, or rules changed.
+3. Create `v3/audits/YYYY-MM-DD_HHMM_<slug>.md` (Mandatory).
+4. Create precisely **1 Conventional Commit** in the framework repository `SDD-V3/v3/`. 
+   - Format: `<type>(<scope>): <summary>`
+   - The commit body MUST include the filename of the generated audit note.
+5. Push the commit if a remote exists; otherwise, print instructions for the user to push.
+
 ---
 
 ## Changelog
 
 | Date | Version | Change |
 |------|---------|--------|
+| 2026-03-05 | 3.7.0 | Added §8 Target Detection + Auto-Git Protocol strictly enforcing framework commit automation |
 | 2026-03-05 | 3.5.0 | Added §7 Commit Scope Rules prohibiting unintended cross-repo commits |
 | 2026-03-04 | 3.2.0 | §1 Traceability chain updated; §3 BREAKING CHANGE footer made mandatory; §4 PR template extended with Change Impact sections; §5 Breaking change → major bump rule enforced, release notes required sections added; §6 QG-5 verification extended with 3 new checks |
 | 2026-03-04 | 3.0.0 | Initial bootstrap of SDD v3 core |

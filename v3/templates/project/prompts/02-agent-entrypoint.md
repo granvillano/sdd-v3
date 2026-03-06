@@ -1,6 +1,6 @@
 # SDD v3 — Master Agent Entrypoint
 # prompts/02-agent-entrypoint.md
-# Version: 3.6.0
+# Version: 3.7.0
 #
 # PURPOSE: This file defines the full workflow, gate rules, and post-job
 # protocol for every AI session on this project. It is loaded by 00-start-job.md.
@@ -135,6 +135,15 @@ After successful execution, in this exact order:
      `[FRAMEWORK HARD STOP] Missing mandatory README/CHANGELOG update for framework change. Stopping.`
      and HALT execution immediately.
    - **Audit Note:** Create an audit note at `[SDD_V3_ROOT]/audits/YYYY-MM-DD_HHMM_<slug>.md` using the exact required header format (see `core/docs-baseline.md §11`).
+
+
+10. **AUTO-GIT (Framework vs Project)**
+    Check `core/traceability-baseline.md` for Target Detection rules:
+    - If `FrameworkChanged == true`, you MUST perform the Auto-Git Protocol:
+      a) Auto-commit to framework repo with Conventional Commit (including audit filename).
+      b) Push if remote exists.
+      c) **HARD STOP**: If the mandatory audit, `CHANGELOG.md` entry, or framework commit is missing, you MUST halt and output:
+         `[AUTO-GIT HARD STOP] Missing Framework Auto-Git components. Stopping.`
 
 
 ---

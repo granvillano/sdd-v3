@@ -4,6 +4,11 @@ All notable changes to the SDD v3 framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.0] - 2026-03-05
+### Added
+- **Target Detection + Auto-Git Protocol:** Added Section 8 to `traceability-baseline.md` mandating deterministic repository target detection (Framework vs Project) and automated Git commits for framework-level changes.
+- **Auto-Git Runtime Enforcement:** Injected STEP 10 into POST-JOB workflow within `02-agent-entrypoint.md` (template) triggering a hard stop if framework automatic commits and documentation are missing.
+
 ## [3.6.0] - 2026-03-05
 ### Added
 - **Framework Change Protocol (Mandatory):** Requires `CHANGELOG.md` updates and `README.md` updates (if behavior/workflow changes) whenever the framework repo is modified.
