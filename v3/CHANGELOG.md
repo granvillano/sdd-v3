@@ -4,6 +4,14 @@ All notable changes to the SDD v3 framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.8.0] - 2026-03-06
+### Added
+- **STEP 2.5 Execution Validation:** Injected a lightweight, deterministic validation step into `02-agent-entrypoint.md` (template) before execution (STEP 3). 
+  - Validates inbox task presence.
+  - Verifies matrix classifiability and role parity (moved from STEP 3).
+  - Enforces minimum contextual docs existence (e.g. `docs/api-contract.md` for backend).
+  - Triggers framework change detection automatically.
+
 ## [3.7.1] - 2026-03-06
 ### Removed
 - **Versioning SSOT Hardening:** Removed fragmented version headers and local changelog tables from all `core/*` documents to strictly enforce `README.md` and `CHANGELOG.md` as the exclusive single sources of truth for framework versioning.

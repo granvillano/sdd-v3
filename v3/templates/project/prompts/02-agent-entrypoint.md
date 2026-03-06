@@ -1,6 +1,6 @@
 # SDD v3 — Master Agent Entrypoint
 # prompts/02-agent-entrypoint.md
-# Version: 3.7.1
+# Version: 3.8.0
 #
 # PURPOSE: This file defines the full workflow, gate rules, and post-job
 # protocol for every AI session on this project. It is loaded by 00-start-job.md.
@@ -70,6 +70,36 @@ If any required gate is not passed → state the gate ID and STOP.
 
 ---
 
+### STEP 2.5 — EXECUTION VALIDATION
+
+Before proceeding to STEP 3, perform these checks in order. If any check fails, you MUST STOP immediately.
+
+**A. Inbox Task Check**
+- Verify that `jobs/inbox.md` contains a task below the marker.
+- If empty → `[VALIDATION HARD STOP] No task found in inbox.`
+
+**B. Task Classifiability Check**
+- Verify that the task can be classified using `core/agent-routing.md`.
+- If no category matches → `[VALIDATION HARD STOP] Task cannot be classified.`
+- Output EXACTLY:
+  `[ROUTING] Task Category: <Category>`
+  `[ROUTING] Assigned Role: <Your Agent Role>`
+- If your assigned role does NOT MATCH the matrix's "Required Agent Role" → `[ROUTING HARD STOP] Task requires <Required Agent Role>, current agent is <Your Agent Role>. Stopping.`
+
+**C. Required Context Check**
+- architecture → requires `docs/spec.md`
+- backend → requires `docs/api-contract.md`
+- docs-only → no extra required doc
+- migration → schema / mapping reference if applicable
+- release → requires `CHANGELOG.md`
+- If required context is missing → `[VALIDATION HARD STOP] Missing required context for <Category>.`
+
+**D. Framework Change Detection**
+- If the task implies modification of framework-owned paths (`core/`, `templates/`, `tools/`, `agents/`, `profiles/`, `task-types/`), then set `FrameworkChange = true`.
+- This activates the **AUTO-GIT (Framework vs Project)** rules in STEP 4.
+
+---
+
 ### STEP 3 — EXECUTE
 
 State active context before starting:
@@ -79,16 +109,7 @@ State active context before starting:
 - Active ticket (if any)
 - Project type (Greenfield / Brownfield)
 
-**ROUTING ENFORCEMENT (HARD STOP)**
-
-Before writing any plan or code, you MUST classify the task according to `core/agent-routing.md`:
-1. Classify the task from `jobs/inbox.md` into one of the matrix Categories.
-2. Output EXACTLY:
-   `[ROUTING] Task Category: <Category>`
-   `[ROUTING] Assigned Role: <Your Agent Role>`
-3. **HARD STOP**: If your `<Your Agent Role>` does NOT MATCH the matrix's "Required Agent Role" for that Category, you MUST stop execution immediately and print: `[ROUTING HARD STOP] Task requires <Required Agent Role>, but current agent is <Your Agent Role>. Stopping execution.`
-
-Execute strictly per your agent constraints ONLY IF routing passes. No deviations from spec without explicit approval. No gate bypasses.
+Execute strictly per your agent constraints ONLY IF validation passes. No deviations from spec without explicit approval. No gate bypasses.
 
 ---
 
