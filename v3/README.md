@@ -1,7 +1,7 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.8.0 | **Date:** 2026-03-06 | **Status:** Active  
-> **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x
+> **Version:** 3.9.2 | **Date:** 2026-03-12 | **Status:** Active  
+> **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x → 3.8.x → 3.9.1
 
 ---
 
@@ -267,6 +267,7 @@ The full framework history is now maintained in the dedicated [`CHANGELOG.md`](C
 
 | Audit file | Covers |
 |-----------|--------|
+| [`2026-03-12_0856_diff-verification-rule.md`](audits/2026-03-12_0856_diff-verification-rule.md) | v3.9.2 Diff Verification Rule |
 | [`2026-03-05_1935_agent-routing-matrix.md`](audits/2026-03-05_1935_agent-routing-matrix.md) | v3.4.0 Agent Routing Decision Matrix |
 | [`2026-03-04_2026_audit-naming-convention.md`](audits/2026-03-04_2026_audit-naming-convention.md) | v3.3.4 audit naming convention |
 | [`2026-03-04_2017_chain-restoration.md`](audits/2026-03-04_2017_chain-restoration.md) | v3.3.3 execution chain restoration |

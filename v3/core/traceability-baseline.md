@@ -105,6 +105,26 @@ refactor(user): extract UserService from UserController [PROJ-71]
 
 ---
 
+## 3.1 Diff Verification Rule (Mandatory)
+
+Before creating any commit, the staged diff MUST be inspected.
+
+This verification ensures that:
+- Only files related to the current ticket are included.
+- No unrelated documentation, configuration, or dependency changes are mixed.
+- The commit remains atomic and traceable.
+
+The required workflow is:
+
+1. Stage only the files related to the ticket.
+2. Inspect the staged diff.
+
+```bash
+git diff --cached
+```
+
+---
+
 ## 4. Pull Request Contract
 
 Every PR MUST include:

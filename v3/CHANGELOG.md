@@ -4,6 +4,22 @@ All notable changes to the SDD v3 framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.9.2] - 2026-03-12
+### Added
+- **Diff Verification Rule (Mandatory):** Added section 3.1 to `core/traceability-baseline.md` mandating explicit review of `git diff --cached` before creating any commits to ensure perfect isolation and traceability without mixed concerns.
+
+## [3.9.1] - 2026-03-10
+### Added
+- **Phase 5 Ticket Implementation Rule:** Enforced isolated, per-ticket Conventional Commits explicitly within the Development phase (`core/workflow.md`), preventing batching multiple tickets into a single monolithic commit.
+
+## [3.9.0] - 2026-03-10
+### Added
+- **ADR Compliance Gate (Phase 4.1):** Enforced a strict rule prohibiting undocumented architectural changes during development. All new architecture dependencies must be preceded by an auto-generated ADR. Contradictions must generate change proposals rather than silent mutations.
+
+## [3.8.1] - 2026-03-10
+### Added
+- **Phase 4.0 ADR Standard:** Added mandatory ADR generation standards (naming conventions, automatic sequence numbering, standard layout template) to Phase 4.0 in `core/workflow.md`.
+
 ## [3.8.0] - 2026-03-06
 ### Added
 - **STEP 2.5 Execution Validation:** Injected a lightweight, deterministic validation step into `02-agent-entrypoint.md` (template) before execution (STEP 3). 
