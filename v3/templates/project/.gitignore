@@ -1,0 +1,40 @@
+# SDD v3 — Default gitignore
+# Standard exclusions for SDD projects
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Dependencies
+node_modules/
+vendor/
+.venv/
+env/
+venv/
+
+# Build outputs
+dist/
+build/
+bin/
+out/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Temporary files
+*.tmp
+*.log
+.cache/
+.npm/
+
+# SDD temporary files
+context-for-new-agent.md
+audit-*.md

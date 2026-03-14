@@ -4,6 +4,13 @@ All notable changes to the SDD v3 framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.12.0] — 2026-03-14
+### Added
+- **Git Automation during Bootstrap**: `sdd-init.sh` now automatically initializes a Git repository, creates an initial commit, and scaffolds a `dev` branch for every new project.
+- **Standard `.gitignore`**: New projects are now scaffolded with a robust `.gitignore` from the framework.
+- **Repository Structure SSOT**: Formalized repository layout documentation in `docs/architecture.md` template.
+- **Improved Handoff Context**: `scripts/generate-new-agent-context.sh` now explicitly describes the repository layout and handles newly bootstrapped projects with specific guidance for Phase 1.
+
 ## [3.11.0] — 2026-03-14
 ### Added
 - **New Tool**: `scripts/generate-new-agent-context.sh` generates a `context-for-new-agent.md` handoff artifact from real project state.

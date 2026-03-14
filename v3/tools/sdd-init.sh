@@ -37,7 +37,7 @@
 set -euo pipefail
 
 # ─── Constants ────────────────────────────────────────────────────────────────
-SDD_VERSION="3.11.0"
+SDD_VERSION="3.12.0"
 PROJECTS_ROOT="$HOME/Desktop/projects"
 
 # ─── Colors ──────────────────────────────────────────────────────────────────
@@ -277,6 +277,21 @@ print_success "inputs/README.md created."
 # Step 3: Copy templates
 print_step "Copying SDD v3 project templates..."
 
+# Git initialization (Early, before copying templates to track them)
+if command -v git >/dev/null 2>&1; then
+  print_step "Initializing Git repository..."
+  git init -q "$PROJECT_PATH"
+  # Set default branch to main if not configured
+  git -C "$PROJECT_PATH" checkout -b main 2>/dev/null || true
+else
+  print_warn "Git not found. Skipping repository initialization."
+fi
+
+# Copy .gitignore first
+if [[ -f "$TEMPLATES_DIR/.gitignore" ]]; then
+  cp "$TEMPLATES_DIR/.gitignore" "$PROJECT_PATH/.gitignore"
+fi
+
 # prompts/ — canonical user-facing directory
 cp "$TEMPLATES_DIR/prompts/00-run.md"               "$PROJECT_PATH/prompts/00-run.md"
 cp "$TEMPLATES_DIR/prompts/00-start-job.md"         "$PROJECT_PATH/prompts/00-start-job.md"
@@ -402,6 +417,18 @@ Expected response time: 48 hours.
 SECURITY
 
 print_success "Placeholder documents created."
+
+# Step 6: Initial Git Commit
+if command -v git >/dev/null 2>&1 && [[ -d "$PROJECT_PATH/.git" ]]; then
+  print_step "Creating initial bootstrap commit..."
+  (
+    cd "$PROJECT_PATH"
+    git add .
+    git commit -m "feat: initial bootstrap [SDD v3]" -m "Project initialized with SDD v3 framework v${SDD_VERSION} (profile: $PROFILE)" -q
+    git checkout -b dev 2>/dev/null || true
+    print_success "Git repository initialized with initial commit on branch 'dev'."
+  )
+fi
 
 # ─── Final Summary ────────────────────────────────────────────────────────────
 echo ""
