@@ -26,124 +26,178 @@
 ────────────────────────────────────────────────────────
 ### ⬇️ A PARTIR DE AQUÍ PEGA EL PROMPT ⬇️
 
-### TASK — Framework improvement: initialize Git automatically and document repository structure in new projects
+### TASK — Add project sync/checkpoint command to SDD and apply it to the current project
 
-You are working on the **SDD v3 framework**, not on a single project.
+You are working on the **SDD v3 framework** and must also apply the resulting feature to the **current project** as part of this task.
 
-Goal:
-Improve project bootstrap so every new SDD project starts with Git tracking active from day zero and with the repository structure documented clearly enough for new agents and developers.
+## Goal
 
-This is a framework-level change and must be implemented in the framework repository.
+Create a new command called:
 
-## What must be improved
+sync-project
 
-### 1. Git initialization at project creation
-When `sdd-init.sh` creates a new project, it should also initialize Git automatically inside the new project root.
+This command must be usable from the **project root**, with no `./scripts/...` and no `.sh`, following the same command exposure model already used by:
 
-Required:
-- run `git init` automatically
-- ensure the project starts with tracking active immediately
-- do not require the user to remember doing this manually later
+- `run-ticket`
+- `close-ticket`
+- `generate-new-agent-context`
 
-### 2. Initial repository state
-Decide and implement the best initial Git state for new projects.
+The command must act as a **project checkpoint / sync command** for end-of-day or manual save moments.
 
-Evaluate and, if appropriate, implement:
-- initial commit automatically created after scaffold
-- optional creation of `dev` branch if that matches the current SDD workflow
-- safe behavior if Git is unavailable on the machine
+It should save the current state of the project into Git in a clean and repeatable way, even if there is no application code yet.
 
-If you choose not to auto-commit, explain why.
-If you choose not to auto-create `dev`, explain why.
+---
 
-### 3. Base `.gitignore`
-Ensure new projects are scaffolded with a proper `.gitignore` from the framework.
+## What `sync-project` must do
 
-It should cover at least:
-- `.DS_Store`
-- `.env`
-- `node_modules/`
-- `dist/`
-- common temporary files
+When run from the root of a project, `sync-project` must:
 
-Adapt it reasonably to the project profile if needed.
+1. Regenerate `context-for-new-agent.md`
+   - always regenerate it before saving state
 
-### 4. Repository structure must be documented in the project itself
-Right now the high-level repository structure is mostly implicit by convention.
+2. Inspect the working tree
+   - detect modified, deleted, untracked files
 
-New projects should include an explicit documentation of the repository structure, for example:
-- `src/` = application code
-- `docs/` = SSOT documentation
-- `jobs/` = task inbox
-- `prompts/` = AI execution prompts
-- `scripts/` = project operational tooling
-- other top-level folders as appropriate
+3. Stage the project state
+   - perform the appropriate Git add so the current project state is captured
 
-Decide the best place for this documentation.
-Preferred options:
-- a section in `docs/architecture.md`
-- or an initial ADR
-- or both if justified
+4. Create a checkpoint commit automatically
+   - commit message must include date and time
+   - make the message clear that this is a project sync/checkpoint commit
+   - choose a good standard format and state it explicitly
 
-The important thing is that the structure is documented in the project, not only implied by framework conventions.
+5. Work whether or not `src/` exists
+   - a newly scaffolded Phase 1 project must still be handled correctly
 
-### 5. Improve `generate-new-agent-context`
-The generated `context-for-new-agent.md` should include the repository structure explicitly.
+6. Be safe and predictable
+   - if there is nothing to commit, say so clearly and do not fail noisily
+   - if Git is not initialized, report clearly what is missing
+   - do not do a push automatically unless you explicitly justify it and make it safe
+   - assume many projects may not yet have a remote configured
 
-It should help a new agent understand:
-- what each top-level folder is for
-- what the important SSOT files are
-- whether the project is still at bootstrap / Phase 1
-- what the next expected steps are in an empty newly-created project
+---
 
-### 6. Better behavior for brand-new projects
-For a freshly created project with empty docs, the generated context should clearly explain:
-- the project is newly bootstrapped
-- no implementation exists yet
-- no `src/` may exist yet and that is normal
-- the next expected steps are to fill `PROJECT_BRIEF.md`, `docs/spec.md`, `docs/architecture.md`, `docs/api-contract.md`, and `docs/tickets.md`
+## Important design intent
 
-This should be explicit so a new agent does not misread an empty scaffold as a broken project.
+This command is for:
+- saving the current full state of the project
+- docs
+- prompts
+- jobs
+- scripts
+- context artifacts
+- code if code exists
+- any project-local modifications that should be checkpointed
 
-### 7. Decide when repository-structure documentation must be updated
-Define a rule for when the project must update its documented repository structure.
+This is NOT a ticket-close command.
+This is NOT only for src/.
+This is a general project state sync/checkpoint.
 
-Provide a recommendation such as:
-- initial structure documented at bootstrap
-- update required whenever top-level repository layout changes
-- update `context-for-new-agent.md` when structure or workflow changes materially
+---
 
-## Files to inspect first
+## Required command behavior
+
+The final command must be callable exactly as:
+
+sync-project
+
+from the project root.
+
+It must not require:
+
+- `./scripts/...`
+- `bash scripts/...`
+- explicit `.sh`
+
+Use the same command exposure mechanism already used by the other SDD project commands.
+
+---
+
+## Framework scope
+
+This is a framework-level change because future projects should also get this command automatically.
+
+You must therefore:
+
+1. add the command to the framework templates / bootstrap process
+2. ensure future projects receive it automatically
+3. apply it to the current project as part of this task so it can be tested now
+
+---
+
+## Current project requirement
+
+Do not only modify the framework.
+
+Also apply the new command to the **current existing project** so that after this task the command can be tested immediately in the current project.
+
+---
+
+## Things to decide and implement
+
+Before implementing, decide and state:
+
+1. exact commit message format used by `sync-project`
+2. whether the command stages all project changes or uses a narrower scope
+3. whether generated files like `context-for-new-agent.md` are included in the checkpoint
+4. whether `CHANGELOG.md` should also be regenerated or not as part of this command
+5. whether the command should refuse to run outside a Git repository
+6. whether push is intentionally excluded
+
+Then implement the chosen design.
+
+---
+
+## Strong guidance
+
+Preferred behavior:
+- regenerate `context-for-new-agent.md`
+- `git status` inspection
+- stage current project state
+- create a checkpoint commit with timestamp
+- no automatic push
+- clear reporting in chat
+
+If you choose something different, justify it clearly.
+
+---
+
+## Files and areas to inspect first
 
 Framework:
 - `tools/sdd-init.sh`
-- `README.md`
-- `CHANGELOG.md`
-- `templates/project/`
-- current template docs and scripts
-- current `generate-new-agent-context` scaffolding
+- command installer / global command exposure logic
+- project templates for scripts and command wrappers
+- framework `README.md`
+- framework `CHANGELOG.md`
 
-Project examples for reference:
-- project `docs/architecture.md`
-- project `docs/00_INDEX.md`
-- project `context-for-new-agent.md`
+Current project:
+- current command model for `run-ticket`
+- current command model for `close-ticket`
+- current command model for `generate-new-agent-context`
+- `sdd.config.yml`
+- current Git repository state
+
+---
 
 ## Required deliverables
 
-At the end provide:
-1. what files in the framework were changed
-2. whether Git init is now automatic
-3. whether an initial commit is created
-4. whether `dev` is created automatically or not
-5. where repository structure is documented in new projects
-6. how `generate-new-agent-context` was improved for new/empty projects
-7. any migration note for already-existing projects
+At the end provide ONLY:
+
+1. files changed in framework
+2. files changed in the current project
+3. exact behavior of `sync-project`
+4. exact commit message format
+5. whether push is done or not
+6. verification results from the current project
+
+---
 
 ## Mandatory framework protocol
 
-Because this is a framework change, you must also:
+Because this changes framework behavior, you must also:
 - update framework `CHANGELOG.md`
-- update framework `README.md` if workflow or bootstrap behavior changed
+- update framework `README.md` if needed
 - create the required audit note in `audits/`
 - follow the normal framework change protocol
 

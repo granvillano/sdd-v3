@@ -1,6 +1,6 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.12.0 | **Date:** 2026-03-14 | **Status:** Active  
+> **Version:** 3.13.0 | **Date:** 2026-03-14 | **Status:** Active  
 > **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x → 3.8.x → 3.9.1
 
 ---
@@ -284,6 +284,7 @@ The full framework history is now maintained in the dedicated [`CHANGELOG.md`](C
 
 | Audit file | Covers |
 |-----------|--------|
+| [`2026-03-14_1625_sync-project-command.md`](audits/2026-03-14_1625_sync-project-command.md) | v3.13.0 Project sync/checkpoint command |
 | [`2026-03-14_1615_git-and-repo-ssot.md`](audits/2026-03-14_1615_git-and-repo-ssot.md) | v3.12.0 Git & Repo structure SSOT |
 | [`2026-03-14_1520_context-generator.md`](audits/2026-03-14_1520_context-generator.md) | v3.11.0 New Agent Context Generator |
 | [`2026-03-14_1430_changelog-automation.md`](audits/2026-03-14_1430_changelog-automation.md) | v3.10.0 Changelog automation |

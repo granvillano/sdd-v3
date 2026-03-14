@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-COMMANDS=("run-ticket" "close-ticket" "generate-new-agent-context")
+COMMANDS=("run-ticket" "close-ticket" "generate-new-agent-context" "sync-project")
 INSTALL_DIR="/usr/local/bin"
 
 echo "Installing SDD v3 global commands to $INSTALL_DIR..."

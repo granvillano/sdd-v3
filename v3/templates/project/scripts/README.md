@@ -44,6 +44,13 @@ Found in `scripts/generate-new-agent-context.sh`. This script:
 - Extracts real-time project state (Phase, Gate, Logs, Tickets).
 - Provides a handoff artifact for starting new AI chats with full project awareness.
 
+## 6. Sync Project
+Regenerates context and creates a Git checkpoint commit of the current project state.
+```bash
+./scripts/sync-project.sh
+```
+**Example:** `./scripts/sync-project.sh`
+
 ## ⚙️ Pre-commit Validation
 The `close-ticket.sh` script automatically runs the project's default test and build commands (e.g., `npm test`, `npm run build`) before finalizing any records.
 
