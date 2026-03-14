@@ -26,179 +26,169 @@
 ────────────────────────────────────────────────────────
 ### ⬇️ A PARTIR DE AQUÍ PEGA EL PROMPT ⬇️
 
-### TASK — Add project sync/checkpoint command to SDD and apply it to the current project
+### TASK — Add `cli-i` command and fully update scripts README documentation
 
-You are working on the **SDD v3 framework** and must also apply the resulting feature to the **current project** as part of this task.
+You are working on the **SDD v3 framework** and must also apply the resulting changes to the **current project** as part of this task.
 
 ## Goal
 
 Create a new command called:
 
-sync-project
+cli-i
 
-This command must be usable from the **project root**, with no `./scripts/...` and no `.sh`, following the same command exposure model already used by:
+Meaning:
+clear inbox.
 
-- `run-ticket`
-- `close-ticket`
-- `generate-new-agent-context`
+This command must safely clean the prompt area in `jobs/inbox.md`.
 
-The command must act as a **project checkpoint / sync command** for end-of-day or manual save moments.
-
-It should save the current state of the project into Git in a clean and repeatable way, even if there is no application code yet.
+At the same time, you must inspect the real scripts that currently exist and regenerate the scripts README so it correctly documents **all available scripts**, both in the framework template and in the current project.
 
 ---
 
-## What `sync-project` must do
+## Important constraint
 
-When run from the root of a project, `sync-project` must:
+Do NOT install the command globally in this task.
 
-1. Regenerate `context-for-new-agent.md`
-   - always regenerate it before saving state
+Do NOT write to `/usr/local/bin`.
+Do NOT request sudo.
+Do NOT create or modify global command aliases in this task.
 
-2. Inspect the working tree
-   - detect modified, deleted, untracked files
+The user will handle global installation manually later if needed.
 
-3. Stage the project state
-   - perform the appropriate Git add so the current project state is captured
+Your job here is only to:
 
-4. Create a checkpoint commit automatically
-   - commit message must include date and time
-   - make the message clear that this is a project sync/checkpoint commit
-   - choose a good standard format and state it explicitly
-
-5. Work whether or not `src/` exists
-   - a newly scaffolded Phase 1 project must still be handled correctly
-
-6. Be safe and predictable
-   - if there is nothing to commit, say so clearly and do not fail noisily
-   - if Git is not initialized, report clearly what is missing
-   - do not do a push automatically unless you explicitly justify it and make it safe
-   - assume many projects may not yet have a remote configured
+- create the project-local script
+- scaffold it in the framework template
+- apply it to the current project
+- update the scripts README documentation properly
 
 ---
 
-## Important design intent
+## `cli-i` required behavior
 
-This command is for:
-- saving the current full state of the project
-- docs
-- prompts
-- jobs
-- scripts
-- context artifacts
-- code if code exists
-- any project-local modifications that should be checkpointed
+The command must safely clean `jobs/inbox.md` by:
 
-This is NOT a ticket-close command.
-This is NOT only for src/.
-This is a general project state sync/checkpoint.
+1. finding this exact marker:
 
----
+`### ⬇️ A PARTIR DE AQUÍ PEGA EL PROMPT ⬇️`
 
-## Required command behavior
+2. preserving everything above that marker unchanged
 
-The final command must be callable exactly as:
+3. replacing everything below the marker with exactly:
 
-sync-project
+`(PASTE YOUR TASK HERE)`
 
-from the project root.
+So the final relevant section must become exactly:
 
-It must not require:
+```md
+### ⬇️ A PARTIR DE AQUÍ PEGA EL PROMPT ⬇️
+(PASTE YOUR TASK HERE)
 
-- `./scripts/...`
-- `bash scripts/...`
-- explicit `.sh`
 
-Use the same command exposure mechanism already used by the other SDD project commands.
+Safety requirements
 
----
+The script must:
 
-## Framework scope
+fail clearly if jobs/inbox.md does not exist
 
-This is a framework-level change because future projects should also get this command automatically.
+fail clearly if the marker is not found
 
-You must therefore:
+never corrupt the file
 
-1. add the command to the framework templates / bootstrap process
-2. ensure future projects receive it automatically
-3. apply it to the current project as part of this task so it can be tested now
+be deterministic
 
----
+be repeatable
 
-## Current project requirement
+work no matter how many lines are below the marker
 
-Do not only modify the framework.
+README documentation requirement
 
-Also apply the new command to the **current existing project** so that after this task the command can be tested immediately in the current project.
+The current scripts README is outdated.
 
----
+You must:
 
-## Things to decide and implement
+inspect the scripts directory
 
-Before implementing, decide and state:
+detect which scripts actually exist
 
-1. exact commit message format used by `sync-project`
-2. whether the command stages all project changes or uses a narrower scope
-3. whether generated files like `context-for-new-agent.md` are included in the checkpoint
-4. whether `CHANGELOG.md` should also be regenerated or not as part of this command
-5. whether the command should refuse to run outside a Git repository
-6. whether push is intentionally excluded
+regenerate the README so it documents all real scripts present
 
-Then implement the chosen design.
+Do NOT assume which scripts exist.
+Do NOT document imaginary scripts.
+Do NOT leave the README partially updated.
 
----
+For every script that actually exists, the README should document:
 
-## Strong guidance
+script name
 
-Preferred behavior:
-- regenerate `context-for-new-agent.md`
-- `git status` inspection
-- stage current project state
-- create a checkpoint commit with timestamp
-- no automatic push
-- clear reporting in chat
+purpose
 
-If you choose something different, justify it clearly.
+basic usage example
 
----
+when it should be used in the workflow
 
-## Files and areas to inspect first
+Scope
+
+You must apply this in both places:
+
+Framework
+
+add cli-i to the project template
+
+update the template scripts README so future projects receive correct documentation
+
+Current project
+
+add cli-i to the current project
+
+update the current project scripts README so it matches the scripts that really exist now
+
+Files to inspect first
 
 Framework:
-- `tools/sdd-init.sh`
-- command installer / global command exposure logic
-- project templates for scripts and command wrappers
-- framework `README.md`
-- framework `CHANGELOG.md`
+
+tools/sdd-init.sh
+
+template project scripts directory
+
+template project scripts README
+
+framework README.md
+
+framework CHANGELOG.md
 
 Current project:
-- current command model for `run-ticket`
-- current command model for `close-ticket`
-- current command model for `generate-new-agent-context`
-- `sdd.config.yml`
-- current Git repository state
 
----
+scripts/
 
-## Required deliverables
+jobs/inbox.md
+
+current scripts README
+
+Required deliverables
 
 At the end provide ONLY:
 
-1. files changed in framework
-2. files changed in the current project
-3. exact behavior of `sync-project`
-4. exact commit message format
-5. whether push is done or not
-6. verification results from the current project
+files changed in the framework
 
----
+files changed in the current project
 
-## Mandatory framework protocol
+scripts detected in the scripts directory
+
+confirmation that the scripts README now documents all existing scripts
+
+verification result for cli-i
+
+Mandatory framework protocol
 
 Because this changes framework behavior, you must also:
-- update framework `CHANGELOG.md`
-- update framework `README.md` if needed
-- create the required audit note in `audits/`
-- follow the normal framework change protocol
+
+update framework CHANGELOG.md
+
+update framework README.md if relevant
+
+create the required audit note in audits/
+
+follow the normal framework change protocol
 
 Respond in Spanish in the chat.

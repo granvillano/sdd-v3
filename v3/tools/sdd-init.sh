@@ -37,7 +37,7 @@
 set -euo pipefail
 
 # ─── Constants ────────────────────────────────────────────────────────────────
-SDD_VERSION="3.13.0"
+SDD_VERSION="3.14.0"
 PROJECTS_ROOT="$HOME/Desktop/projects"
 
 # ─── Colors ──────────────────────────────────────────────────────────────────
@@ -304,6 +304,7 @@ cp "$TEMPLATES_DIR/scripts/close-ticket.sh"              "$PROJECT_PATH/scripts/
 cp "$TEMPLATES_DIR/scripts/generate-changelog.sh"        "$PROJECT_PATH/scripts/generate-changelog.sh"
 cp "$TEMPLATES_DIR/scripts/generate-new-agent-context.sh" "$PROJECT_PATH/scripts/generate-new-agent-context.sh"
 cp "$TEMPLATES_DIR/scripts/sync-project.sh"               "$PROJECT_PATH/scripts/sync-project.sh"
+cp "$TEMPLATES_DIR/scripts/cli-i.sh"                      "$PROJECT_PATH/scripts/cli-i.sh"
 cp "$TEMPLATES_DIR/scripts/README.md"                    "$PROJECT_PATH/scripts/README.md"
 cp "$TEMPLATES_DIR/PROJECT_BRIEF.template.md"       "$PROJECT_PATH/PROJECT_BRIEF.md"
 
@@ -313,6 +314,7 @@ chmod +x "$PROJECT_PATH/scripts/close-ticket.sh"
 chmod +x "$PROJECT_PATH/scripts/generate-changelog.sh"
 chmod +x "$PROJECT_PATH/scripts/generate-new-agent-context.sh"
 chmod +x "$PROJECT_PATH/scripts/sync-project.sh"
+chmod +x "$PROJECT_PATH/scripts/cli-i.sh"
 
 # Substitute project name in copied files
 sed -i.bak "s/\[PROJECT NAME\]/$PROJECT_NAME/g" "$PROJECT_PATH/docs/implementation-log.md" 2>/dev/null && rm -f "$PROJECT_PATH/docs/implementation-log.md.bak"

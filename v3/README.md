@@ -1,10 +1,16 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.13.0 | **Date:** 2026-03-14 | **Status:** Active  
-> **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x → 3.8.x → 3.9.1
+> **Version:** 3.14.0 | **Date:** 2026-03-14 | **Status:** Active  
+> **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x → 3.8.x → 3.9.1 → 3.12.0 → 3.13.0
 
 ---
 
+## [3.14.0] — 2026-03-14
+### Added
+- **New Tool**: `scripts/cli-i.sh` (Clear Inbox) added to safely reset the job inbox prompt area.
+- **Documentation Upgrade**: Fully regenerated `scripts/README.md` to accurately document all 6 standard SDD scripts.
+
+## [3.13.0] — 2026-03-14
 ## What is SDD v3?
 
 SDD (Spec-Driven Development) v3 is an AI-agent orchestration framework for building production software under a specification-first, gate-driven methodology. Every decision must be specced. Every line of code must trace back to a requirement. Every deploy must have an unbroken audit trail.
@@ -284,6 +290,7 @@ The full framework history is now maintained in the dedicated [`CHANGELOG.md`](C
 
 | Audit file | Covers |
 |-----------|--------|
+| [`2026-03-14_1655_cli-i-and-docs-update.md`](audits/2026-03-14_1655_cli-i-and-docs-update.md) | v3.14.0 Clear Inbox & Docs Update |
 | [`2026-03-14_1625_sync-project-command.md`](audits/2026-03-14_1625_sync-project-command.md) | v3.13.0 Project sync/checkpoint command |
 | [`2026-03-14_1615_git-and-repo-ssot.md`](audits/2026-03-14_1615_git-and-repo-ssot.md) | v3.12.0 Git & Repo structure SSOT |
 | [`2026-03-14_1520_context-generator.md`](audits/2026-03-14_1520_context-generator.md) | v3.11.0 New Agent Context Generator |

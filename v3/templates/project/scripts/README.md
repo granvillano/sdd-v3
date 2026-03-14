@@ -7,51 +7,48 @@ Loads a ticket description from `docs/tickets.md` into `jobs/inbox.md`.
 ```bash
 ./scripts/run-ticket.sh <TICKET_ID>
 ```
-**Example:** `./scripts/run-ticket.sh TICK-007`
+**Example:** `./scripts/run-ticket.sh TICK-001`
+**Workflow:** Use this to start work on a specific ticket from your roadmap.
 
 ## 2. Close Ticket
 Archives the current inbox, updates logs, runs validations, and commits the work to the `dev` branch.
 ```bash
 ./scripts/close-ticket.sh <TICKET_ID> "<COMMIT_MESSAGE>"
 ```
-**Example:** `./scripts/close-ticket.sh TICK-007 "feat(auth): implement user registration endpoint [TICKET-007]"`
+**Example:** `./scripts/close-ticket.sh TICK-001 "feat: implement user login"`
+**Workflow:** Use this to finalize a ticket. It ensures traceability and code quality.
+
+## 3. Clear Inbox (cli-i)
+Safely clears the prompt area in `jobs/inbox.md` to prepare for a new task.
+```bash
+./scripts/cli-i.sh
+```
+**Workflow:** Use this when you want to discard the current prompt area content without closing a ticket.
+
+## 4. Generate New Agent Context
+Generates `context-for-new-agent.md` with the current project state for AI handoff.
+```bash
+./scripts/generate-new-agent-context.sh
+```
+**Workflow:** Run this before starting a new chat session with an AI agent.
+
+## 5. Sync Project
+Regenerates context and creates a Git checkpoint commit of the current project state.
+```bash
+./scripts/sync-project.sh
+```
+**Workflow:** Use for end-of-day saves or manual checkpoints.
+
+## 6. Generate Changelog
+Idempotently updates `CHANGELOG.md` based on `docs/implementation-log.md`.
+```bash
+./scripts/generate-changelog.sh
+```
+**Workflow:** Automatically called by `close-ticket.sh`, but can be run manually to refresh history.
 
 ---
 
 ## 🛡️ Branching Policy
 - **Active Development**: All ticket implementation and closure MUST happen on the `dev` branch.
 - **Stable Code**: The `main` branch is reserved for stable, integrated code only.
-- **Automation**: `close-ticket.sh` automatically ensures you are on the `dev` branch before committing. It will create `dev` from `main` if it doesn't already exist.
-- **Merging**: Merging from `dev` to `main` should be done manually or via a separate release workflow once a phase is complete.
-
-### 3. Closure Automation (Close Ticket)
-Found in `scripts/close-ticket.sh`. This script:
-- Enforces branch policy (closure on `dev`).
-- Runs validations (`npm test`, `npm run build`).
-- Archives the task and updates `docs/implementation-log.md`.
-- Automatically captures the commit hash and rollback info.
-- **New**: Regenerates `CHANGELOG.md` from real implementation data.
-- **New**: Hardens inbox cleanup and restores the task placeholder.
-
-### 4. Changelog Automation (Generate Changelog)
-Found in `scripts/generate-changelog.sh`. This script:
-- Idempotently updates `CHANGELOG.md` based on `docs/implementation-log.md`.
-- Maps log entries to standard "Added", "Changed", "Fixed" categories.
-
-### 5. Context Generator (New Agent Context)
-Found in `scripts/generate-new-agent-context.sh`. This script:
-- Generates `context-for-new-agent.md` in the project root.
-- Extracts real-time project state (Phase, Gate, Logs, Tickets).
-- Provides a handoff artifact for starting new AI chats with full project awareness.
-
-## 6. Sync Project
-Regenerates context and creates a Git checkpoint commit of the current project state.
-```bash
-./scripts/sync-project.sh
-```
-**Example:** `./scripts/sync-project.sh`
-
-## ⚙️ Pre-commit Validation
-The `close-ticket.sh` script automatically runs the project's default test and build commands (e.g., `npm test`, `npm run build`) before finalizing any records.
-
-The closure will abort if either check fails.
+- **Automation**: `close-ticket.sh` automatically ensures you are on the `dev` branch.
