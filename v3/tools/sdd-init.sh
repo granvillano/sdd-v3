@@ -2,7 +2,7 @@
 # =============================================================================
 # SDD v3 — Project Initializer
 # tools/sdd-init.sh
-# Version: 3.3.4
+# Version: 3.3.5
 # =============================================================================
 # Usage:
 #   bash sdd-init.sh --project <project-name> --profile <profile-id>
@@ -37,7 +37,7 @@
 set -euo pipefail
 
 # ─── Constants ────────────────────────────────────────────────────────────────
-SDD_VERSION="3.3.4"
+SDD_VERSION="3.11.0"
 PROJECTS_ROOT="$HOME/Desktop/projects"
 
 # ─── Colors ──────────────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ echo ""
 # Step 1: Create project directory structure
 print_step "Creating project directory structure..."
 mkdir -p "$PROJECTS_ROOT"
-mkdir -p "$PROJECT_PATH"/{docs/{adr,changes},jobs/archive,inputs,prompts}
+mkdir -p "$PROJECT_PATH"/{docs/{adr,changes},jobs/archive,inputs,prompts,scripts}
 
 print_success "Directory structure created: $PROJECT_PATH"
 
@@ -284,7 +284,18 @@ cp "$TEMPLATES_DIR/prompts/02-agent-entrypoint.md"  "$PROJECT_PATH/prompts/02-ag
 cp "$TEMPLATES_DIR/jobs/inbox.md"                   "$PROJECT_PATH/jobs/inbox.md"
 cp "$TEMPLATES_DIR/docs/implementation-log.md"      "$PROJECT_PATH/docs/implementation-log.md"
 cp "$TEMPLATES_DIR/docs/00_INDEX.md"                "$PROJECT_PATH/docs/00_INDEX.md"
+cp "$TEMPLATES_DIR/scripts/run-ticket.sh"                "$PROJECT_PATH/scripts/run-ticket.sh"
+cp "$TEMPLATES_DIR/scripts/close-ticket.sh"              "$PROJECT_PATH/scripts/close-ticket.sh"
+cp "$TEMPLATES_DIR/scripts/generate-changelog.sh"        "$PROJECT_PATH/scripts/generate-changelog.sh"
+cp "$TEMPLATES_DIR/scripts/generate-new-agent-context.sh" "$PROJECT_PATH/scripts/generate-new-agent-context.sh"
+cp "$TEMPLATES_DIR/scripts/README.md"                    "$PROJECT_PATH/scripts/README.md"
 cp "$TEMPLATES_DIR/PROJECT_BRIEF.template.md"       "$PROJECT_PATH/PROJECT_BRIEF.md"
+
+# Set execution permissions for the helper scripts
+chmod +x "$PROJECT_PATH/scripts/run-ticket.sh"
+chmod +x "$PROJECT_PATH/scripts/close-ticket.sh"
+chmod +x "$PROJECT_PATH/scripts/generate-changelog.sh"
+chmod +x "$PROJECT_PATH/scripts/generate-new-agent-context.sh"
 
 # Substitute project name in copied files
 sed -i.bak "s/\[PROJECT NAME\]/$PROJECT_NAME/g" "$PROJECT_PATH/docs/implementation-log.md" 2>/dev/null && rm -f "$PROJECT_PATH/docs/implementation-log.md.bak"

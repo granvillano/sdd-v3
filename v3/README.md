@@ -1,6 +1,6 @@
 # SDD v3 — Spec-Driven Development Framework
 
-> **Version:** 3.9.2 | **Date:** 2026-03-12 | **Status:** Active  
+> **Version:** 3.11.0 | **Date:** 2026-03-14 | **Status:** Active  
 > **Previous:** 3.0.0 → 3.1.0 → 3.2.x → 3.3.x → 3.8.x → 3.9.1
 
 ---
@@ -166,7 +166,24 @@ Step 2: Paste this into Antigravity:
 → AI reads the task from `jobs/inbox.md`  
 → AI executes → archives to `jobs/archive/` → resets inbox  
 
-No scripts. No terminal. No file copying per session.
+### Global Commands Setup
+
+To enable standard workflow commands (`run-ticket`, `close-ticket`, `generate-new-agent-context`) from any project root, run the global installer:
+
+```bash
+bash tools/install-global-commands.sh
+```
+
+### Starting a new agent session (Context Handoff)
+
+When starting a new AI chat for an existing project, use the context generator:
+
+```bash
+# From the project root
+generate-new-agent-context
+```
+
+This generates `context-for-new-agent.md` in the project root. Paste its content into the new AI chat.
 
 ---
 
@@ -267,7 +284,13 @@ The full framework history is now maintained in the dedicated [`CHANGELOG.md`](C
 
 | Audit file | Covers |
 |-----------|--------|
+| [`2026-03-14_1520_context-generator.md`](audits/2026-03-14_1520_context-generator.md) | v3.11.0 New Agent Context Generator |
+| [`2026-03-14_1430_changelog-automation.md`](audits/2026-03-14_1430_changelog-automation.md) | v3.10.0 Changelog automation |
 | [`2026-03-12_0856_diff-verification-rule.md`](audits/2026-03-12_0856_diff-verification-rule.md) | v3.9.2 Diff Verification Rule |
+| [`2026-03-10_1118_phase5-commit-timing.md`](audits/2026-03-10_1118_phase5-commit-timing.md) | v3.9.1 Phase 5 Commit Timing |
+| [`2026-03-10_1056_adr-compliance-gate.md`](audits/2026-03-10_1056_adr-compliance-gate.md) | v3.9.0 ADR Compliance Gate |
+| [`2026-03-10_1045_framework-adr-rules.md`](audits/2026-03-10_1045_framework-adr-rules.md) | v3.9.0 Framework ADR Rules |
+| [`2026-03-05_1834_tooling-baseline-integration.md`](audits/2026-03-05_1834_tooling-baseline-integration.md) | v3.3.5 Tooling Baseline Integration |
 | [`2026-03-05_1935_agent-routing-matrix.md`](audits/2026-03-05_1935_agent-routing-matrix.md) | v3.4.0 Agent Routing Decision Matrix |
 | [`2026-03-04_2026_audit-naming-convention.md`](audits/2026-03-04_2026_audit-naming-convention.md) | v3.3.4 audit naming convention |
 | [`2026-03-04_2017_chain-restoration.md`](audits/2026-03-04_2017_chain-restoration.md) | v3.3.3 execution chain restoration |

@@ -4,6 +4,19 @@ All notable changes to the SDD v3 framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.11.0] — 2026-03-14
+### Added
+- **New Tool**: `scripts/generate-new-agent-context.sh` generates a `context-for-new-agent.md` handoff artifact from real project state.
+- **Workflow Improvement**: Standardized global command exposure via `/usr/local/bin` shims.
+- **Project Initializer**: `v3/tools/sdd-init.sh` updated to scaffold the generator and advise on global command installation.
+- **Admin Tool**: `v3/tools/install-global-commands.sh` added to framework for easy setup of standard command shims.
+
+## [3.10.0] — 2026-03-14
+### Added
+- Auto-generation of project `CHANGELOG.md` from `docs/implementation-log.md` via `scripts/generate-changelog.sh`.
+- Hardened `jobs/inbox.md` cleanup and placeholder restoration in `scripts/close-ticket.sh`.
+- Integrated changelog regeneration into the ticket closure workflow.
+
 ## [3.9.2] - 2026-03-12
 ### Added
 - **Diff Verification Rule (Mandatory):** Added section 3.1 to `core/traceability-baseline.md` mandating explicit review of `git diff --cached` before creating any commits to ensure perfect isolation and traceability without mixed concerns.

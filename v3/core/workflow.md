@@ -20,8 +20,12 @@ Phase 2: UX / UI Design
     ↓
 Phase 3: Architecture & API Contracts
     ↓ [ARCHITECTURE GATE]
+Phase 4.0: ADR Generation & Architecture Decisions
+    ↓
 Phase 4: Task Decomposition (Tickets)
     ↓
+Phase 4.1: Architecture Guardrails & ADR Review
+    ↓ [ARCH GUARDRAIL GATE]
 Phase 5: Development
     ↓ [BUILD GATE]
 Phase 6: QA & Testing
@@ -135,7 +139,7 @@ Files found: <count>
 
 | Field | Value |
 |-------|-------|
-| **Goal** | Define system structure, data models, and integration contracts |
+| **Goal** | Define system structure, data models, integration contracts, and extract formal architecture decisions |
 | **Owner Agent** | `architecture_agent` |
 | **Inputs** | `spec.md`, `ux-spec.md`, inputs scan evidence (if Brownfield) |
 | **Outputs** | `architecture.md`, `api-contract.md` (OpenAPI/JSON) |
@@ -145,11 +149,83 @@ Files found: <count>
 1. Design database schema and entity relationships.
 2. Define system components and their boundaries.
 3. Write full API contract (request/response, auth, error codes).
-4. Record architecture decisions as ADRs.
-5. **[v3.2.2]** Verify inputs scan evidence exists in `docs/changes/` if `inputs/` is non-empty.
+4. Record architecture decisions as ADR candidates.
+5. Generate a section in `architecture.md` titled:
+
+   `## Architecture Decisions Extractable as ADR`
+
+   This section must list all architecture decisions that must be converted into ADR records during **Phase 4.0**.
+
+6. Extract decisions from the architecture description including (at minimum):
+
+   - Runtime environment
+   - Framework selection
+   - Database engine
+   - Authentication strategy
+   - Logging strategy
+   - API error contract
+   - Request tracing strategy
+   - Idempotency strategy
+   - Authorization model
+   - Concurrency / locking strategy
+   - External integrations
+
+7. The extracted decisions must be listed as structured items so they can be automatically converted to ADR files during **Phase 4.0**.
+
+8. **[v3.2.2]** Verify inputs scan evidence exists in `docs/changes/` if `inputs/` is non-empty.
 
 ---
+## Phase 4.0 — ADR Generation & Architecture Decisions
 
+| Field | Value |
+|------|------|
+| **Goal** | Identify and formally record architecture decisions before task decomposition |
+| **Owner Agent** | `architecture_agent` |
+| **Inputs** | `architecture.md`, `api-contract.md`, `spec.md` |
+| **Outputs** | ADR files in `docs/adr/` |
+| **Gate** | **ADR GATE** — All critical architecture decisions recorded as ADRs |
+
+### Activities
+
+1. Analyze `architecture.md` and `api-contract.md` to detect architecture decisions.
+2. Identify decisions requiring formal documentation, including:
+   - Runtime environment
+   - Framework selection
+   - Authentication strategy
+   - Database technology
+   - API error contract
+   - Logging and tracing strategy
+   - Idempotency and request safety
+   - External integrations
+3. For each decision identified:
+   - Generate an ADR file in `docs/adr/`.
+4. Ensure ADR filenames strictly follow this convention:
+   - `docs/adr/ADR-0001-<slug>.md`
+5. Rules for ADR Generation:
+   1. Sequential numbering starting from ADR-0001.
+   2. If ADR files already exist, detect the highest number and continue sequentially.
+   3. One ADR must be created per major architecture decision.
+   4. ADRs must be generated automatically by architecture_agent.
+6. Each ADR must follow the mandatory standard template exactly.
+
+### ADR Template (Mandatory)
+
+```markdown
+# ADR-XXXX — <Title>
+
+Status: Accepted  
+Date: <ISO timestamp>
+
+## Context
+Explain the architectural problem or design constraint.
+
+## Decision
+Describe the chosen solution.
+
+## Consequences
+Explain trade-offs, implications and future impact.
+```
+---
 ## Phase 4 — Task Decomposition
 
 | Field | Value |
@@ -168,6 +244,71 @@ Files found: <count>
 
 ---
 
+## Phase 4.1 — Architecture Guardrails & ADR Review
+
+| Field | Value |
+|------|------|
+| **Goal** | Ensure implementation tickets respect existing architecture decisions before development begins |
+| **Owner Agent** | `architecture_agent` |
+| **Inputs** | `tickets.md`, `architecture.md`, `api-contract.md`, `docs/adr/*` |
+| **Outputs** | ADR validation note or proposal in `docs/changes/YYYY-MM-DD_HHMM_<slug>.md`, new ADRs if needed |
+| **Gate** | **ARCH GUARDRAIL GATE (ADR Compliance Gate)** — All tickets verified against ADR decisions. All architectural choices must have an ADR. |
+
+### Activities
+
+1. Read all ADR records located in `docs/adr/`.
+2. Verify each ticket in `tickets.md` respects existing architecture decisions.
+3. Confirm the following architectural constraints are respected:
+   - Framework choice (e.g., Fastify)
+   - Authentication model (e.g., JWT RS256 + refresh tokens)
+   - Database technology
+   - Error contract structure
+   - Request tracing (`X-Request-ID`)
+   - Idempotency strategy for critical operations
+
+### ADR Compliance Rule (Mandatory)
+
+During Phase 4.1, the `architecture_agent` MUST validate ADR compliance:
+1. Detect whether a ticket introduces any new architectural component, framework, infrastructure dependency, or cross-cutting concern not previously documented in ADR files.
+2. If such a decision is detected:
+   - The workflow MUST pause.
+   - The `architecture_agent` MUST generate a new ADR file in: `docs/adr/ADR-XXXX-<slug>.md`
+   - The ADR must follow the mandatory template defined in Phase 4.0.
+3. Only after the ADR has been created and documented may the workflow proceed.
+4. **Silent architecture changes are strictly forbidden.**
+5. If a ticket directly contradicts an existing ADR decision:
+   - The agent must NOT modify the system architecture automatically.
+   - Instead, it must create a proposal document in:
+     `docs/changes/YYYY-MM-DD_HHMM_architecture-change-proposal.md`
+     explaining the conflict.
+
+### Post-Validation Check
+6. Record validation evidence in:
+   `docs/changes/YYYY-MM-DD_HHMM_architecture-guardrail-check.md`
+
+### Validation Evidence Format
+
+```markdown
+# Architecture Guardrail Check
+
+Date: <ISO timestamp>
+
+## ADRs Reviewed
+- ADR-001 <title>
+- ADR-002 <title>
+
+## Ticket Validation
+- TICK-001 — OK
+- TICK-002 — OK
+- TICK-003 — OK
+
+## Conflicts
+None
+
+
+
+
+
 ## Phase 5 — Development
 
 | Field | Value |
@@ -183,6 +324,18 @@ Files found: <count>
 2. Backend: models → services → controllers → routes → auth.
 3. Follow `core/engineering-standards.md` and profile conventions.
 4. Commit using Conventional Commits format (see `traceability-baseline.md`).
+
+### Ticket Implementation Rule (Mandatory)
+Each ticket must be implemented in isolation. After completing a ticket:
+- create a dedicated commit
+- use Conventional Commits format
+- include the ticket ID in the commit message
+- do not begin the next ticket until the current one is completed
+
+**Examples:**
+- `feat(auth): implement login endpoint [TICK-008]`
+- `fix(db): handle mysql reconnect logic [TICK-004]`
+- `chore(config): add env validation loader [TICK-001]`
 
 ---
 
